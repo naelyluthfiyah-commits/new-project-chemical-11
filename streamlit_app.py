@@ -1,4 +1,4 @@
 import streamlit as st
 
 st.title("This is a title")
-st.title("_Ruang_ Kimia :yellow :🧪")
+st.title(": yellow [_Ruang_ Kimia] :🧪")
