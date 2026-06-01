@@ -1,46 +1,33 @@
 import streamlit as st
+import pandas as pd
 
-st.set_page_config(
-    page_title="ChemName Explorer",
-    page_icon="🧪",
-    layout="wide"
-)
+# Judul
+st.title("🧪 Pencarian Nama Senyawa Kimia")
 
-st.title("🧪 ChemName Explorer")
+# Membaca data
+data = pd.read_csv("senyawa.csv")
 
-st.markdown("""
-### Website Tata Nama Senyawa Organik
+# Input pengguna
+cari = st.text_input("Masukkan nama atau rumus kimia")
 
-Mencari:
-- Nama IUPAC
-- Nama Trivial
-- Rumus Molekul
-- Struktur Senyawa
+# Tombol cari
+if st.button("Cari"):
 
-Menggunakan database kimia organik.
-""")
+    ditemukan = False
 
-st.title("🔍 Pencarian Senyawa")
+    for i in range(len(data)):
 
-try:
-    df = pd.read_csv("data/senyawa.csv")
+        if (cari.lower() == str(data.loc[i, "nama_iupac"]).lower()
+            or cari.lower() == str(data.loc[i, "nama_trivial"]).lower()
+            or cari.lower() == str(data.loc[i, "rumus"]).lower()):
 
-    keyword = st.text_input(
-        "Masukkan nama IUPAC, nama trivial, atau rumus"
-    )
+            st.success("Data ditemukan!")
 
-    if keyword:
+            st.write("Nama IUPAC :", data.loc[i, "nama_iupac"])
+            st.write("Nama Trivial :", data.loc[i, "nama_trivial"])
+            st.write("Rumus :", data.loc[i, "rumus"])
 
-        hasil = df[
-            df["nama_iupac"].str.contains(keyword, case=False, na=False) |
-            df["nama_trivial"].str.contains(keyword, case=False, na=False) |
-            df["rumus"].str.contains(keyword, case=False, na=False)
-        ]
+            ditemukan = True
 
-        if not hasil.empty:
-            st.dataframe(hasil)
-        else:
-            st.warning("Data tidak ditemukan")
-
-except Exception as e:
-    st.error(f"Terjadi error: {e}")
+    if ditemukan == False:
+        st.error("Data tidak ditemukan")
