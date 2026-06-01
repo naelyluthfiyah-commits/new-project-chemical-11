@@ -1,4 +1,21 @@
 import streamlit as st
 
-st.title("This is a title")
-st.title("_Ruang_ Kimia 🧪")
+st.set_page_config(
+    page_title="ChemName Explorer",
+    page_icon="🧪",
+    layout="wide"
+)
+
+st.title("🧪 ChemName Explorer")
+
+st.markdown("""
+### Website Tata Nama Senyawa Organik
+
+Mencari:
+- Nama IUPAC
+- Nama Trivial
+- Rumus Molekul
+- Struktur Senyawa
+
+Menggunakan database kimia organik.
+""")
