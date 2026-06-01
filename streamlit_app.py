@@ -19,3 +19,4 @@ Mencari:
 
 Menggunakan database kimia organik.
 """)
+pages/1_Pencarian.py
