@@ -20,27 +20,27 @@ Mencari:
 Menggunakan database kimia organik.
 """)
 
-pages/1_Pencarian.py
-
-import streamlit as st
-import pandas as pd
-
-df = pd.read_csv("data/senyawa.csv")
-
 st.title("🔍 Pencarian Senyawa")
 
-keyword = st.text_input("Masukkan nama atau rumus")
+try:
+    df = pd.read_csv("data/senyawa.csv")
 
-if keyword:
+    keyword = st.text_input(
+        "Masukkan nama IUPAC, nama trivial, atau rumus"
+    )
 
-    hasil = df[
-        df["nama_iupac"].str.contains(keyword, case=False) |
-        df["nama_trivial"].str.contains(keyword, case=False) |
-        df["rumus"].str.contains(keyword, case=False)
-    ]
+    if keyword:
 
-    if len(hasil) > 0:
-        st.dataframe(hasil)
+        hasil = df[
+            df["nama_iupac"].str.contains(keyword, case=False, na=False) |
+            df["nama_trivial"].str.contains(keyword, case=False, na=False) |
+            df["rumus"].str.contains(keyword, case=False, na=False)
+        ]
 
-    else:
-        st.error("Data tidak ditemukan")
+        if not hasil.empty:
+            st.dataframe(hasil)
+        else:
+            st.warning("Data tidak ditemukan")
+
+except Exception as e:
+    st.error(f"Terjadi error: {e}")
