@@ -1,93 +1,73 @@
 import streamlit as st
-import pubchempy as pcp
-import py3Dmol
-from stmol import showmol
 import requests
 
-# Konfigurasi Halaman Web
-st.set_page_config(page_title="Penjelajah Senyawa Organik", layout="wide", page_icon="🧪")
+# 1. JARING PENGAMAN IMPORT: Jika library kimia gagal dimuat, web tidak akan mati total
+try:
+    import pubchempy as pcp
+    from stmol import showmol
+    import py3Dmol
+    IMPORTS_SUCCESSFUL = True
+except ImportError as e:
+    IMPORTS_SUCCESSFUL = False
+    IMPORT_ERROR_MSG = str(e)
 
-st.title("🧪 Web Visualisasi & Properti Senyawa Organik")
-st.write("Masukkan nama senyawa secara IUPAC atau Trivial (Disarankan menggunakan bahasa Inggris untuk akurasi database yang lebih tinggi, misal: Acetic acid, Benzene, Ethanol).")
+# Konfigurasi halaman
+st.set_page_config(page_title="Kalkulator Senyawa Kimia", layout="wide")
+st.title("🧪 Aplikasi Penjelajah Senyawa Organik")
 
-# Input user
-compound_name = st.text_input("Masukkan Nama Senyawa:", "Aspirin")
+# Cek apakah instalasi library di server berhasil
+if not IMPORTS_SUCCESSFUL:
+    st.error(f"❌ Gagal memuat pustaka kimia. Masalah: {IMPORT_ERROR_MSG}")
+    st.info("Tips: Pastikan file 'requirements.txt' sudah di-upload ke GitHub di folder yang sama dengan app.py.")
+else:
+    # Input dari user
+    st.write("Masukkan nama senyawa dalam bahasa Inggris (Contoh: *Ethanol*, *Benzene*, *Caffeine*, *Aspirin*)")
+    nama_senyawa = st.text_input("Nama Senyawa:", "Ethanol")
 
-if st.button("Cari Senyawa"):
-    with st.spinner("Mengambil data dari database PubChem..."):
-        try:
-            # Mencari senyawa menggunakan PubChemPy berdasarkan nama
-            compounds = pcp.get_compounds(compound_name, 'name')
-            
-            if compounds:
-                c = compounds[0]
+    if st.button("Cari Data"):
+        with st.spinner("Sedang mencari di database PubChem..."):
+            try:
+                # Cari senyawa berdasarkan nama
+                hasil_pencarian = pcp.get_compounds(nama_senyawa, 'name')
                 
-                # Membagi layar menjadi 2 kolom
-                col1, col2 = st.columns([1, 1])
-                
-                with col1:
-                    st.subheader("📝 Properti Senyawa")
-                    st.write(f"*Nama IUPAC:* {c.iupac_name}")
-                    st.write(f"*Rumus Molekul:* {c.molecular_formula}")
-                    st.write(f"*Berat Molekul:* {c.molecular_weight} g/mol")
-                    st.write(f"*SMILES:* {c.canonical_smiles}")
+                if hasil_pencarian:
+                    senyawa = hasil_pencarian[0]
                     
-                    # Catatan Realitas Database:
-                    # Titik didih dan reaktivitas eksperimental tersimpan dalam struktur JSON 
-                    # yang sangat kompleks di PubChem PUG REST, sehingga kita berikan placeholder informatif.
-                    st.write("---")
-                    st.write("*Titik Didih & Reaktivitas:*")
-                    st.info("💡 Catatan Realitas Data: Data seperti titik didih (Boiling Point) dan reaktivitas spesifik membutuhkan parsing lanjutan dari literatur eksperimental atau API PubChem tingkat lanjut. Pada tahap ini, web memprioritaskan kalkulasi struktur fisik dasar.")
-                
-                with col2:
-                    st.subheader("🧬 Struktur 3D (Gaya Molymod)")
-                    # Mengambil data koordinat 3D (SDF) langsung dari PubChem REST API
-                    url = f"https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/{c.cid}/record/SDF/?record_type=3d"
-                    response = requests.get(url)
+                    # Bagi menjadi 2 kolom
+                    kol1, kol2 = st.columns(2)
                     
-                    if response.status_code == 200:
-                        sdf_data = response.text
+                    with kol1:
+                        st.subheader("📝 Informasi Senyawa")
+                        st.success(f"Senyawa ditemukan! (CID: {senyawa.cid})")
+                        st.write(f"**Nama IUPAC:** {getattr(senyawa, 'iupac_name', 'Tidak tersedia')}")
+                        st.write(f"**Rumus Molekul:** {getattr(senyawa, 'molecular_formula', 'Tidak tersedia')}")
+                        st.write(f"**Berat Molekul:** {getattr(senyawa, 'molecular_weight', 'Tidak tersedia')} g/mol")
                         
-                        # Render 3D menggunakan py3Dmol
-                        view = py3Dmol.view(width=450, height=450)
-                        view.addModel(sdf_data, 'sdf')
+                        st.info("💡 **Titik Didih & Reaktivitas:** Data ini memerlukan analisis teks dokumen (parsing) yang lebih mendalam dari server PubChem, sehingga belum dapat ditampilkan secara instan pada versi dasar ini.")
+                    
+                    with kol2:
+                        st.subheader("🧬 Visualisasi 3D (Gaya Molymod)")
+                        # Ambil data koordinat 3D
+                        url_3d = f"https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/{senyawa.cid}/record/SDF/?record_type=3d"
+                        respon = requests.get(url_3d, timeout=10)
                         
-                        # Styling 'Molymod' (Ball and Stick)
-                        view.setStyle({'stick': {'radius': 0.15}, 'sphere': {'radius': 0.4}})
-                        view.setBackgroundColor('#ffffff')
-                        view.zoomTo()
-                        
-                        # Tampilkan di Streamlit
-                        showmol(view, height=450, width=450)
-                    else:
-                        st.warning("Koordinat 3D tidak tersedia di database untuk senyawa ini. Menampilkan struktur 2D tidak didukung pada blok ini.")
-            else:
-                st.error("Senyawa tidak ditemukan. Coba gunakan istilah bahasa Inggris (Contoh: gunakan 'Water' untuk Air).")
+                        if respon.status_code == 200 and len(respon.text).strip() > 100:
+                            try:
+                                # Render objek 3D
+                                view = py3Dmol.view(width=400, height=400)
+                                view.addModel(respon.text, 'sdf')
+                                view.setStyle({'stick': {'radius': 0.2}, 'sphere': {'radius': 0.4}})
+                                view.setBackgroundColor('#ffffff')
+                                view.zoomTo()
+                                showmol(view, height=400, width=400)
+                            except Exception as err_render:
+                                st.warning(f"Gagal merender struktur 3D: {err_render}")
+                        else:
+                            st.warning("⚠️ Struktur 3D tidak tersedia untuk senyawa ini di database PubChem.")
+                            
+                else:
+                    st.error("❌ Senyawa tidak ditemukan. Pastikan ejaan benar dan gunakan bahasa Inggris.")
+                    
+            except Exception as e:
+                st.error(f"Terjadi kesalahan saat mengambil data: {e}")
                 
-        except Exception as e:
-            st.error(f"Terjadi kesalahan sistem: {e}")
-
-# Ubah bagian render 3D di dalam "with col2:" menjadi seperti ini:
-with col2:
-    st.subheader("🧬 Struktur 3D (Gaya Molymod)")
-    url = f"https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/{c.cid}/record/SDF/?record_type=3d"
-    
-    try:
-        response = requests.get(url, timeout=10)
-        if response.status_code == 200 and len(response.text).strip() > 0:
-            sdf_data = response.text
-            
-            # Menggunakan lebar dinamis agar tidak crash
-            view = py3Dmol.view(width=400, height=400)
-            view.addModel(sdf_data, 'sdf')
-            view.setStyle({'stick': {'radius': 0.2}, 'sphere': {'radius': 0.4}})
-            view.setBackgroundColor('#ffffff')
-            view.zoomTo()
-            
-            # Tampilkan menggunakan stmol
-            showmol(view, height=400, width=400)
-        else:
-            st.warning("⚠️ Data koordinat 3D tidak tersedia di PubChem untuk senyawa ini.")
-    except Exception as e:
-        st.error(f"Gagal merender struktur 3D: {e}")
-        
