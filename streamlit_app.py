@@ -1,77 +1,73 @@
 import streamlit as st
-import requests
+import pubchempy as pcp
 from rdkit import Chem
 from rdkit.Chem import Draw
-from rdkit.Chem import AllChem
-import numpy as np
 
-# Judul Aplikasi
+# Define function to draw molecule and save as image
+def draw_molecule(smiles):
+    mol = Chem.MolFromSmiles(smiles)
+    img = Draw.MolToImage(mol)
+    return img
+
+# Cover Page
 st.title("Aplikasi Tata Penamaan Senyawa Organik")
+st.subheader("Anggota Kelompok:")
+st.write("ANDIKA DWI PRASHOJO")
+st.write("JAWAHER SABRINA A")
+st.write("NAELY LUTHFIYAH ARIF")
+st.write("SALWA AZKA SABANA")
+st.write("ALEX KUSUMAH")
 
-# Cover depan
-st.markdown("""
-## Anggota Kelompok:
-- ANDIKA DWI PRASHOJO
-- JAWAHER SABRINA A
-- NAELY LUTHFIYAH ARIF
-- SALWA AZKA SABANA
-- ALEX KUSUMAH
-""")
-
-# Pilihan Menu
-option = st.selectbox("Pilih Menu:", ("Tata Penamaan Senyawa", "Latihan Soal"))
+option = st.selectbox("Pilih fitur:", ["Tata Penamaan Senyawa", "Latihan Soal"])
 
 if option == "Tata Penamaan Senyawa":
     st.header("Tata Penamaan Senyawa Organik")
-
-    # Input nama senyawa
-    compound_name = st.text_input("Masukkan nama senyawa (IUPAC atau Trivial):")
+    compound_name = st.text_input("Masukkan nama senyawa organik (IUPAC atau Trivial):")
     
     if st.button("Mulai"):
-        # Mengambil data dari PubChem
         try:
-            compound_info = requests.get(f"https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/{compound_name}/JSON").json()
-            compound_data = compound_info['PC_Compounds'][0]
-            smiles = compound_data['props'][0]['value']['sval']
-            mol = Chem.MolFromSmiles(smiles)
-            img = Draw.MolToImage(mol, size=(300, 300))
+            compound = pcp.get_compounds(compound_name, 'name')[0]
+            smiles = compound.isomeric_smiles
 
-            # Menampilkan informasi
-            st.image(img, caption=f"Struktur Senyawa: {compound_name}")
-            st.write("Berat Molekul:", compound_data['props'][1]['value']['fval'])
-            st.write("Titik Didih:", compound_data['props'][2]['value']['fval'])
-            st.write("Sifat dan reaktivitas:", compound_data['props'][3]['value']['sval'])
+            st.image(draw_molecule(smiles), caption="Rumus Struktur Senyawa")
+            st.write(f"Berat Molekul: {compound.molecular_weight} g/mol")
+            st.write(f"Titik Didih: {compound.boiling_point} °C")
+            st.write(f"Sifat Bahan: {compound.properties}")
+            st.write(f"Reaktivitas: {compound.reactivity}")
 
-            # Input untuk reaksi
-            reactant = st.text_input("Masukkan senyawa reaktan:")
-            if st.button("Reaksi"):
-                # Proses reaksi (simulasi)
-                # Untuk demonstrasi, kita akan menggunakan placeholder
-                st.write(f"Melakukan reaksi antara {compound_name} dan {reactant}...")
-                st.write("Hasil reaksi: [Gambar reaksi di sini]")
-                st.write("Reaksi: [Jenis reaksi]")
-                st.write("Berat Molekul hasil reaksi:", "X g/mol")
-                st.write("Titik Didih hasil reaksi:", "Y °C")
-                st.write("Sifat bahan dan reaktivitas hasil reaksi:", "[Info]")
-        except:
-            st.error("Data senyawa tidak ditemukan. Pastikan nama senyawa benar.")
+            reaction_input = st.text_input("Senyawa lain untuk reaksi:")
+            if st.button("Reaksikan"):
+                # Placeholder for reaction logic
+                # Introduce hypothetical reaction handling here
+                st.write("Hasil reaksi senyawa...")
+                st.image(draw_molecule(smiles), caption="Rumus Struktur Reaksi")
+
+                # Display additional info for product
+                # You would need to obtain new compound data here
+                st.write(f"Berat Molekul produk: ...")
+                st.write(f"Titik Didih produk: ...")
+                st.write(f"Penamaan baru: ...")
+                st.write("Jelaskan reaksi yang terjadi ...")
+
+        except Exception as e:
+            st.error(f"Terjadi kesalahan: {e}")
 
 elif option == "Latihan Soal":
-    st.header("Latihan Soal")
-    st.write("Tebak rumus struktur berikut dengan nama IUPAC atau Trivial.")
-
-    # Simulasi soal
+    st.header("Latihan Soal: Tebak Rumus Struktur")
+    
     questions = [
-        ("Soal 1: Struktur 1", "Etilena"), 
-        ("Soal 2: Struktur 2", "Propana"),
-        # Tambahkan 8 soal lainnya di sini...
+        {"structure": "C1=CC=CC=C1", "answer": "Benzena"},  # Example: Cyclohexane
+        # Add more questions here
     ]
-
-    for question in questions:
-        st.subheader(question[0])
-        answer = st.text_input("Jawaban Anda:")
-        if st.button("Cek Jawaban"):
-            if answer.lower() == question[1].lower():
+    
+    for index, question in enumerate(questions):
+        st.image(draw_molecule(question["structure"]), caption=f"Soal {index + 1}")
+        user_answer = st.text_input(f"Jawaban Anda untuk soal {index + 1}:")
+        
+        if st.button(f"Periksa Jawaban Soal {index + 1}"):
+            if user_answer.lower() == question["answer"].lower():
                 st.success("Benar!")
             else:
-                st.error("Salah! Jawaban yang benar adalah: " + question[1])
+                st.error(f"Salah! Jawaban benar adalah: {question['answer']}")
+                
+    st.button("Lanjutkan ke soal berikutnya...")
