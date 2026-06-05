@@ -1,6 +1,6 @@
 streamlit
 pubchempy
-rdkit-pypi             
-Pillow                 
-
+py3Dmol                
+stmol
+requests
 
