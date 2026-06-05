@@ -1,2 +1,7 @@
 streamlit
 pandas
+pubchempy
+requests
+py3Dmol
+rdkit
+
