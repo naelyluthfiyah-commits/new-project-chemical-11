@@ -1,6 +1,7 @@
 streamlit
 pubchempy
-py3Dmol                
+py3Dmol
 stmol
 requests
+ipython_genutils
 
