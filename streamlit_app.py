@@ -66,3 +66,28 @@ if st.button("Cari Senyawa"):
                 
         except Exception as e:
             st.error(f"Terjadi kesalahan sistem: {e}")
+
+# Ubah bagian render 3D di dalam "with col2:" menjadi seperti ini:
+with col2:
+    st.subheader("🧬 Struktur 3D (Gaya Molymod)")
+    url = f"https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/{c.cid}/record/SDF/?record_type=3d"
+    
+    try:
+        response = requests.get(url, timeout=10)
+        if response.status_code == 200 and len(response.text).strip() > 0:
+            sdf_data = response.text
+            
+            # Menggunakan lebar dinamis agar tidak crash
+            view = py3Dmol.view(width=400, height=400)
+            view.addModel(sdf_data, 'sdf')
+            view.setStyle({'stick': {'radius': 0.2}, 'sphere': {'radius': 0.4}})
+            view.setBackgroundColor('#ffffff')
+            view.zoomTo()
+            
+            # Tampilkan menggunakan stmol
+            showmol(view, height=400, width=400)
+        else:
+            st.warning("⚠️ Data koordinat 3D tidak tersedia di PubChem untuk senyawa ini.")
+    except Exception as e:
+        st.error(f"Gagal merender struktur 3D: {e}")
+        
