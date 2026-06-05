@@ -1,133 +1,77 @@
 import streamlit as st
+import requests
+from rdkit import Chem
+from rdkit.Chem import Draw
+from rdkit.Chem import AllChem
+import numpy as np
 
-st.set_page_config(
-page_title="Chem Analysis",
-page_icon="🧪",
-layout="wide"
-)
+# Judul Aplikasi
+st.title("Aplikasi Tata Penamaan Senyawa Organik")
 
-# =========================
-
-# COVER PAGE
-
-# =========================
-
-st.title("🧪 CHEM ANALYSIS")
-st.subheader("Aplikasi Pembelajaran Kimia Organik")
-
-st.markdown("---")
-
+# Cover depan
 st.markdown("""
+## Anggota Kelompok:
+- ANDIKA DWI PRASHOJO
+- JAWAHER SABRINA A
+- NAELY LUTHFIYAH ARIF
+- SALWA AZKA SABANA
+- ALEX KUSUMAH
+""")
 
-### Anggota Kelompok
+# Pilihan Menu
+option = st.selectbox("Pilih Menu:", ("Tata Penamaan Senyawa", "Latihan Soal"))
 
-* ANDIKA DWI PRASHOJO
-* JAWAHER SABRINA A
-* NAELY LUTHFIYAH ARIF
-* SALWA AZKA SABANA
-* ALEX KUSUMAH
-  """)
+if option == "Tata Penamaan Senyawa":
+    st.header("Tata Penamaan Senyawa Organik")
 
-st.markdown("---")
+    # Input nama senyawa
+    compound_name = st.text_input("Masukkan nama senyawa (IUPAC atau Trivial):")
+    
+    if st.button("Mulai"):
+        # Mengambil data dari PubChem
+        try:
+            compound_info = requests.get(f"https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/{compound_name}/JSON").json()
+            compound_data = compound_info['PC_Compounds'][0]
+            smiles = compound_data['props'][0]['value']['sval']
+            mol = Chem.MolFromSmiles(smiles)
+            img = Draw.MolToImage(mol, size=(300, 300))
 
-menu = st.sidebar.selectbox(
-"Pilih Menu",
-[
-"Beranda",
-"Tata Penamaan Senyawa",
-"Latihan Soal"
-]
-)
+            # Menampilkan informasi
+            st.image(img, caption=f"Struktur Senyawa: {compound_name}")
+            st.write("Berat Molekul:", compound_data['props'][1]['value']['fval'])
+            st.write("Titik Didih:", compound_data['props'][2]['value']['fval'])
+            st.write("Sifat dan reaktivitas:", compound_data['props'][3]['value']['sval'])
 
-# =========================
+            # Input untuk reaksi
+            reactant = st.text_input("Masukkan senyawa reaktan:")
+            if st.button("Reaksi"):
+                # Proses reaksi (simulasi)
+                # Untuk demonstrasi, kita akan menggunakan placeholder
+                st.write(f"Melakukan reaksi antara {compound_name} dan {reactant}...")
+                st.write("Hasil reaksi: [Gambar reaksi di sini]")
+                st.write("Reaksi: [Jenis reaksi]")
+                st.write("Berat Molekul hasil reaksi:", "X g/mol")
+                st.write("Titik Didih hasil reaksi:", "Y °C")
+                st.write("Sifat bahan dan reaktivitas hasil reaksi:", "[Info]")
+        except:
+            st.error("Data senyawa tidak ditemukan. Pastikan nama senyawa benar.")
 
-# TATA PENAMAAN
+elif option == "Latihan Soal":
+    st.header("Latihan Soal")
+    st.write("Tebak rumus struktur berikut dengan nama IUPAC atau Trivial.")
 
-# =========================
+    # Simulasi soal
+    questions = [
+        ("Soal 1: Struktur 1", "Etilena"), 
+        ("Soal 2: Struktur 2", "Propana"),
+        # Tambahkan 8 soal lainnya di sini...
+    ]
 
-if menu == "Tata Penamaan Senyawa":
-
-```
-st.header("Tata Penamaan Senyawa Organik")
-
-nama = st.text_input(
-    "Masukkan nama senyawa (IUPAC atau trivial)"
-)
-
-if st.button("Mulai"):
-
-    st.success("Data senyawa ditemukan")
-
-    st.image(
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Ethanol-3D-balls.png/640px-Ethanol-3D-balls.png",
-        width=300
-    )
-
-    st.write("### Informasi Senyawa")
-
-    st.write("Nama IUPAC : Ethanol")
-    st.write("Rumus Molekul : C₂H₆O")
-    st.write("Berat Molekul : 46.07 g/mol")
-    st.write("Titik Didih : 78.37 °C")
-    st.write("Sifat : Cairan tidak berwarna")
-    st.write("Reaktivitas : Mudah terbakar")
-
-    st.markdown("---")
-
-    st.subheader("Prediksi Reaksi")
-
-    reaktan = st.text_input(
-        "Masukkan reagen tambahan"
-    )
-
-    if st.button("Prediksi Reaksi"):
-
-        st.write(
-            "Jenis reaksi: Oksidasi"
-        )
-
-        st.write(
-            "Produk: Asam asetat"
-        )
-
-        st.image(
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Acetic-acid-3D-balls.png/640px-Acetic-acid-3D-balls.png",
-            width=300
-        )
-```
-
-# =========================
-
-# LATIHAN SOAL
-
-# =========================
-
-elif menu == "Latihan Soal":
-
-```
-st.header("Latihan Tata Nama Senyawa")
-
-soal = [
-    {
-        "gambar":"https://upload.wikimedia.org/wikipedia/commons/6/63/Butane-2D-skeletal.png",
-        "jawaban":"butana"
-    }
-]
-
-st.image(soal[0]["gambar"])
-
-jawab = st.text_input(
-    "Nama senyawa?"
-)
-
-if st.button("Periksa"):
-
-    if jawab.lower() == soal[0]["jawaban"]:
-        st.success("Benar")
-    else:
-        st.error("Salah")
-
-    st.write(
-        "Pembahasan: Struktur tersebut adalah butana."
-    )
-```
+    for question in questions:
+        st.subheader(question[0])
+        answer = st.text_input("Jawaban Anda:")
+        if st.button("Cek Jawaban"):
+            if answer.lower() == question[1].lower():
+                st.success("Benar!")
+            else:
+                st.error("Salah! Jawaban yang benar adalah: " + question[1])
