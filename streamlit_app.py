@@ -22,7 +22,7 @@ if not IMPORTS_SUCCESSFUL:
 else:
     # Input dari user
     st.write("Masukkan nama senyawa dalam bahasa Inggris (Contoh: *Ethanol*, *Benzene*, *Caffeine*, *Aspirin*)")
-    nama_senyawa = st.text_input("Nama Senyawa:", "Ethanol")
+    nama_senyawa = st.text_input("Nama Senyawa:", "Butanol")
 
     if st.button("Cari Data"):
         with st.spinner("Sedang mencari di database PubChem..."):
@@ -45,13 +45,14 @@ else:
                         
                         st.info("💡 **Titik Didih & Reaktivitas:** Data ini memerlukan analisis teks dokumen (parsing) yang lebih mendalam dari server PubChem, sehingga belum dapat ditampilkan secara instan pada versi dasar ini.")
                     
-                    with kol2:
+                    with col2:
                         st.subheader("🧬 Visualisasi 3D (Gaya Molymod)")
                         # Ambil data koordinat 3D
                         url_3d = f"https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/{senyawa.cid}/record/SDF/?record_type=3d"
                         respon = requests.get(url_3d, timeout=10)
                         
-                        if respon.status_code == 200 and len(respon.text).strip() > 100:
+                        # --- PERBAIKAN DI BARIS INI (Menghapus .strip() yang salah) ---
+                        if respon.status_code == 200 and len(respon.text) > 100:
                             try:
                                 # Render objek 3D
                                 view = py3Dmol.view(width=400, height=400)
