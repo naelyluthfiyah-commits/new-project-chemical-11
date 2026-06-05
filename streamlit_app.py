@@ -22,7 +22,7 @@ if not IMPORTS_SUCCESSFUL:
 else:
     # Input dari user
     st.write("Masukkan nama senyawa dalam bahasa Inggris (Contoh: *Ethanol*, *Benzene*, *Caffeine*, *Aspirin*)")
-    nama_senyawa = st.text_input("Nama Senyawa:", "Butanol")
+    nama_senyawa = st.text_input("Nama Senyawa:", "Ethanol")
 
     if st.button("Cari Data"):
         with st.spinner("Sedang mencari di database PubChem..."):
@@ -33,7 +33,7 @@ else:
                 if hasil_pencarian:
                     senyawa = hasil_pencarian[0]
                     
-                    # Bagi menjadi 2 kolom
+                    # Membagi menjadi 2 kolom (Menggunakan nama kol1 dan kol2)
                     kol1, kol2 = st.columns(2)
                     
                     with kol1:
@@ -45,13 +45,13 @@ else:
                         
                         st.info("💡 **Titik Didih & Reaktivitas:** Data ini memerlukan analisis teks dokumen (parsing) yang lebih mendalam dari server PubChem, sehingga belum dapat ditampilkan secara instan pada versi dasar ini.")
                     
-                    with col2:
+                    # --- PERBAIKAN DI BARIS INI: Diubah dari col2 menjadi kol2 ---
+                    with kol2:
                         st.subheader("🧬 Visualisasi 3D (Gaya Molymod)")
                         # Ambil data koordinat 3D
                         url_3d = f"https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/{senyawa.cid}/record/SDF/?record_type=3d"
                         respon = requests.get(url_3d, timeout=10)
                         
-                        # --- PERBAIKAN DI BARIS INI (Menghapus .strip() yang salah) ---
                         if respon.status_code == 200 and len(respon.text) > 100:
                             try:
                                 # Render objek 3D
