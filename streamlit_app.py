@@ -417,10 +417,12 @@ else:
                     nama_produk = "Metanol"
                     rumus_produk = "CH_3OH"
                     penjelasan_kustom = "Metil halida diserang oleh nukleofil hidroksida (OH⁻) melalui reaksi satu tahap (SN2) menghasilkan Metanol."
+                    rumus_latex = r"\text{CH}_3\text{-} + \text{-OH} \longrightarrow \text{CH}_3\text{OH}"
                 elif "Etil" in nama_induk:
                     nama_produk = "Etanol"
                     rumus_produk = "C_2H_5OH"
                     penjelasan_kustom = "Etil halida bereaksi dengan basa kuat encer (seperti NaOH encer) menghasilkan Etanol."
+                    rumus_latex = r"\text{C}_2\text{H}_5\text{-} + \text{-OH} \longrightarrow \text{C}_2\text{H}_5\text{OH}"
                 elif "Propil" in nama_induk:
                     nama_produk = "1-Propanol"
                     rumus_produk = "C_3H_7OH"
