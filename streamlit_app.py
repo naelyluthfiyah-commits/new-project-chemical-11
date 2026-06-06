@@ -395,6 +395,23 @@ else:
                 nama_p = "Etanol"
                 penjelasan = "Etil halida diserang oleh nukleofil hidroksida (OH⁻) melalui reaksi satu tahap (SN2) menghasilkan Etanol."
                 rumus_latex = r"\text{C}_2\text{H}_5\text{-} + \text{-OH} \longrightarrow \text{C}_2\text{H}_5\text{OH}"
+                elif "Propil" in rantai_alkil and "Alkohol" in gugus_reagen:
+                tipe_rx = "Substitusi Nukleofilik (Pembentukan Alkohol)"
+                nama_p = "1-Propanol"
+                penjelasan = "Propil halida diserang oleh nukleofil hidroksida (OH⁻) melalui reaksi satu tahap (SN2) menghasilkan 1-Propanol."
+                rumus_latex = r"\text{C}_3\text{H}_7\text{-} + \text{-OH} \longrightarrow \text{C}_3\text{H}_7\text{OH}"
+                
+            elif "Isopropil" in rantai_alkil and "Alkohol" in gugus_reagen:
+                tipe_rx = "Substitusi Nukleofilik (Pembentukan Alkohol)"
+                nama_p = "2-Propanol (Isopropanol)"
+                penjelasan = "Isopropil halida diserang oleh nukleofil hidroksida (OH⁻) menghasilkan senyawa alkohol sekunder 2-Propanol."
+                rumus_latex = r"\text{(CH}_3\text{)}_2\text{CH-} + \text{-OH} \longrightarrow \text{(CH}_3\text{)}_2\text{CHOH}"
+                
+            elif "Fenil" in rantai_alkil and "Alkohol" in gugus_reagen:
+                tipe_rx = "Substitusi Nukleofilik Aromatik"
+                nama_p = "Fenol"
+                penjelasan = "Gugus fenil/benzena berikatan dengan nukleofil hidroksida (OH⁻) menghasilkan senyawa alkohol aromatik bernama Fenol."
+                rumus_latex = r"\text{C}_6\text{H}_5\text{-} + \text{-OH} \longrightarrow \text{C}_6\text{H}_5\text{OH}"
             else:
                 tipe_rx = "Reaksi Organik"
                 nama_p = "Produk Hasil Reaksi"
