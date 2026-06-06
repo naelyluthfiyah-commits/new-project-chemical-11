@@ -385,6 +385,7 @@ else:
 
             if st.button("Jalankan Reaksi Kustom 🧪"):
             # ==================== KELOMPOK METIL ====================
+            
             if "Metil" in rantai_alkil and "Alkohol" in gugus_reagen:
                 tipe_rx = "Substitusi Nukleofilik (SN2)"
                 nama_p = "Metanol"
