@@ -145,20 +145,20 @@ def terjemahkan_ke_inggris(nama_input):
     if nama_bersih in KAMUS_KIMIA:
         return KAMUS_KIMIA[nama_bersih]
     
-    # Cek pola akhiran akhiran umum bahasa indonesia ke bahasa inggris (aturan morfologi trivial)
+    # Cek pola akhiran akhiran umum bahasa indonesia ke bahasa inggris
     translated = nama_bersih
     if translated.endswith("ol"):
-        pass # Akhiran alkohol di kedua bahasa sama
+        pass 
     elif translated.endswith("al"):
-        pass # Akhiran aldehid di kedua bahasa sama
+        pass 
     elif translated.endswith("on"):
-        pass # Akhiran keton di kedua bahasa sama
+        pass 
     elif translated.endswith("at"):
-        translated = translated[:-2] + "ate" # metil asetat -> methyl acetate
+        translated = translated[:-2] + "ate" 
     elif translated.startswith("asam "):
         bagian = translated.replace("asam ", "")
         if bagian.endswith("at"):
-            translated = bagian[:-2] + "ic acid" # asam propanoat -> propanoic acid
+            translated = bagian[:-2] + "ic acid" 
         else:
             translated = bagian + " acid"
             
@@ -710,7 +710,7 @@ else:
             st.latex(r"\text{CH}_3\text{CONH}_2 + \text{H}_2\text{O} + \text{HCl} \longrightarrow \text{CH}_3\text{COOH} + \text{NH}_4\text{Cl}")
 
     # ==========================================
-    # TAB 3: GAME KUIS TATA NAMA (TAMPILAN SATU PER SATU DENGAN PEMBAHASAN INSTAN)
+    # TAB 3: GAME KUIS TATA NAMA (MENYENANGKAN & COLORFUL)
     # ==========================================
     with tab3:
         st.markdown("<h3 style='color: #00b894;'>🏆 Tantangan Cerdas: Kuis Tata Nama IUPAC</h3>", unsafe_allow_html=True)
@@ -791,7 +791,8 @@ else:
         ]
 
         # Logika Alur Kuis Bertahap (Step-by-Step)
-        if not st.session_state.kuis_selesasi:
+        # --- PERBAIKAN: Menggunakan st.session_state.kuis_selesai tanpa salah eja ---
+        if not st.session_state.kuis_selesai:
             idx = st.session_state.kuis_current_idx
             soal_aktif = DATABASE_SOAL[idx]
             
@@ -851,8 +852,9 @@ else:
                         st.session_state.kuis_jawab_status = None
                         st.rerun()
                 else:
+                    # --- PERBAIKAN: Menggunakan st.session_state.kuis_selesai tanpa salah eja ---
                     if st.button("Lihat Hasil Skor Akhir Kuis 🏁"):
-                        st.session_state.kuis_selesasi = True
+                        st.session_state.kuis_selesai = True
                         st.rerun()
                         
         else:
@@ -875,5 +877,5 @@ else:
                 st.session_state.kuis_score = 0
                 st.session_state.kuis_terjawab = False
                 st.session_state.kuis_jawab_status = None
-                st.session_state.kuis_selesasi = False
+                st.session_state.kuis_selesai = False
                 st.rerun()
