@@ -97,7 +97,7 @@ def get_boiling_point_and_safety(cid):
     bp_val = "Tidak ditemukan di database eksperimental"
     reactivity_val = "Stabil dalam kondisi normal. Hindari kontak langsung tanpa APD."
     try:
-        url = f"https://pubchem.ncbi.nlm.nih.gov/rest/pug_view/data/compound/{cid}/JSON/"
+        url = f"[https://pubchem.ncbi.nlm.nih.gov/rest/pug_view/data/compound/](https://pubchem.ncbi.nlm.nih.gov/rest/pug_view/data/compound/){cid}/JSON/"
         res = requests.get(url, timeout=5)
         if res.status_code == 200:
             sections = res.json().get("Record", {}).get("Section", [])
@@ -212,7 +212,7 @@ else:
                                 </div>
                                 """, unsafe_allow_html=True)
                             with kol2:
-                                url_3d = f"https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/{senyawa.cid}/record/SDF/?record_type=3d"
+                                url_3d = f"[https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/](https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/){senyawa.cid}/record/SDF/?record_type=3d"
                                 respon = requests.get(url_3d, timeout=10)
                                 if respon.status_code == 200 and len(respon.text) > 100:
                                     view = py3Dmol.view(width=450, height=350)
@@ -225,7 +225,7 @@ else:
                             st.error("❌ Senyawa tidak ditemukan. Periksa kembali ejaannya.")
                     except Exception as e: st.error(f"Error: {e}")
 
-    # TAB 2: LAB REAKSI ORGANIK (SUDAH DIPERBAIKI DARI KOTAK MERAH)
+    # TAB 2: LAB REAKSI ORGANIK
     with tab2:
         st.markdown("<h3 style='color: #e17055;'>⚡ Laboratorium Mekanisme Reaksi Organik</h3>", unsafe_allow_html=True)
         col_input1, col_input2 = st.columns(2)
@@ -247,7 +247,6 @@ else:
             formula_induk = rantai_alkil.split("(")[1].replace(")", "")
             formula_pereaksi = gugus_reagen.split("(")[1].replace(")", "")
             
-            # Logika Pemrosesan Reaksi Dinamis (Perbaikan struktural komplit)
             if "Alkohol" in gugus_reagen:
                 tipe_rx, penjelasan = "Substitusi Nukleofilik", "Gugus fungsi hidroksil menyerang alkil halida."
                 nama_p = "Metanol" if "Metil" in nama_induk else "Etanol" if "Etil" in nama_induk else "Propanol"
@@ -275,12 +274,12 @@ else:
             st.latex(rf"\text{{{res['induk']}}} + \text{{{res['reagen']}}} \longrightarrow \text{{{res['rumus']}}}")
 
     # ==========================================
-    # TAB 3: GAME KUIS TATA NAMA MULTI-LEVEL (FITUR BARU)
+    # TAB 3: GAME KUIS TATA NAMA MULTI-LEVEL
     # ==========================================
     with tab3:
         # DATABASE 30 SOAL BERLEVEL (10 Soal per Tingkat)
         DATABASE_BERLEVEL = {
-            1: [ # LEVEL 1: MUDAH
+            1: [
                 {"pertanyaan": "Nama IUPAC alkana rantai lurus CH3-CH2-CH2-CH3?", "opsi": ["Propana", "Butana", "Pentana", "Heksana"], "jawaban": "Butana", "pembahasan": "Memiliki rantai lurus 4 karbon = Butana."},
                 {"pertanyaan": "Gugus fungsi senyawa aldehid ditulis sebagai...", "opsi": ["-OH", "-CO-", "-CHO", "-COOH"], "jawaban": "-CHO", "pembahasan": "-CHO adalah gugus alkanal/aldehid."},
                 {"pertanyaan": "Senyawa hidrokarbon CH3-CH=CH-CH3 bernama...", "opsi": ["1-Butena", "2-Butena", "Butuna", "Metilpropena"], "jawaban": "2-Butena", "pembahasan": "Ikatan rangkap dua terletak di nomor 2."},
@@ -292,7 +291,7 @@ else:
                 {"pertanyaan": "Keton terkecil CH3-CO-CH3 memiliki nama IUPAC...", "opsi": ["Propanal", "Propanon", "Butanon", "Etanon"], "jawaban": "Propanon", "pembahasan": "Keton dengan 3 karbon = Propanon."},
                 {"pertanyaan": "Senyawa ester CH3-COO-CH3 dinamai secara IUPAC...", "opsi": ["Metil Metanoat", "Metil Etanoat", "Etil Metanoat", "Metil Asetat"], "jawaban": "Metil Etanoat", "pembahasan": "Grup alkil metil dan alkanoat etanoat = Metil Etanoat."}
             ],
-            2: [ # LEVEL 2: MENENGAH
+            2: [
                 {"pertanyaan": "Nama IUPAC untuk struktur CH3-CH(CH3)-CH2-CH3 adalah...", "opsi": ["Pentana", "2-Metilbutana", "3-Metilbutana", "Isopentana"], "jawaban": "2-Metilbutana", "pembahasan": "Rantai induk butana dengan cabang metil di nomor 2."},
                 {"pertanyaan": "Nama IUPAC dari senyawa keton CH3-CH2-CO-CH2-CH3 adalah...", "opsi": ["2-Pentanon", "3-Pentanon", "Pentanonal", "Dietil Keton"], "jawaban": "3-Pentanon", "pembahasan": "Gugus karbonil terletak di atom C nomor 3."},
                 {"pertanyaan": "Manakah tulisan rumus umum dari gugus fungsi Ester?", "opsi": ["-R-OH", "-R-CO-R'", "-R-COO-R'", "-R-O-R'"], "jawaban": "-R-COO-R'", "pembahasan": "-COOR' adalah rumus umum alkil alkanoat (ester)."},
@@ -304,7 +303,7 @@ else:
                 {"pertanyaan": "Nama resmi IUPAC dari senyawa eter asimetris CH3-O-CH2-CH3?", "opsi": ["Metoksietana", "Etoksimetana", "Etil Metil Eter", "Dimetil Eter"], "jawaban": "Metoksietana", "pembahasan": "Grup alkoksi terkecil (metoksi) menempel pada alkana utama (etana)."},
                 {"pertanyaan": "Isomer posisi dari 1-Butanol yang merupakan alkohol sekunder adalah...", "opsi": ["2-Butanol", "Metilpropanol", "Butanal", "Butanon"], "jawaban": "2-Butanol", "pembahasan": "Perpindahan posisi -OH ke karbon nomor 2 membentuk alkohol sekunder."}
             ],
-            3: [ # LEVEL 3: SULIT
+            3: [
                 {"pertanyaan": "Senyawa CH3-CH(OH)-COOH (Asam Laktat) memiliki nama IUPAC...", "opsi": ["Asam 2-hidroksipropanoat", "Asam 1-hidroksietanoat", "2-Hidroksipropanol", "Asam laktat"], "jawaban": "Asam 2-hidroksipropanoat", "pembahasan": "Asam karboksilat berprioritas tinggi dibanding alkohol, gugus -OH menjadi cabang hidroksi di C nomor 2."},
                 {"pertanyaan": "Berdasarkan tata nama IUPAC, gugus fungsi dengan prioritas tertinggi adalah...", "opsi": ["-OH (Alkohol)", "-CHO (Aldehid)", "-COOH (Asam Karboksilat)", "-NH2 (Amina)"], "jawaban": "-COOH (Asam Karboksilat)", "pembahasan": "Asam karboksilat menempati urutan hierarki prioritas nomor satu."},
                 {"pertanyaan": "Nama IUPAC resmi untuk bahan peledak TNT adalah...", "opsi": ["Trinitrobenzena", "2,4,6-Trinitrotoluena", "1,3,5-Trinitrotoluena", "Trinitrofenol"], "jawaban": "2,4,6-Trinitrotoluena", "pembahasan": "Tiga gugus nitro terikat di posisi 2, 4, dan 6 pada rantai induk Toluena."},
@@ -318,7 +317,6 @@ else:
             ]
         }
 
-        # Dekorasi Judul Tingkatan Level
         level_titles = {1: "🟢 LEVEL 1: MUDAH (EASY)", 2: "🟡 LEVEL 2: MENENGAH (MEDIUM)", 3: "🔴 LEVEL 3: SULIT (HARD)"}
         level_colors = {1: "#ebfffa", 2: "#fff9f4", 3: "#fff2f2"}
         
@@ -377,7 +375,6 @@ else:
                         st.session_state.kuis_selesai = True
                         st.rerun()
         else:
-            # TAMPILAN SKOR AKHIR PER LEVEL
             st.balloons()
             st.markdown(f"""
             <div style="background: white; padding: 35px; border-radius: 20px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.05); max-width: 550px; margin: 20px auto;">
@@ -390,7 +387,6 @@ else:
             </div>
             """, unsafe_allow_html=True)
             
-            # SISTEM UNLOCK KE LEVEL SELANJUTNYA
             if st.session_state.kuis_level < 3:
                 st.write("Selamat! Tombol di bawah ini sekarang terbuka untuk melangkah ke tantangan berikutnya.")
                 if st.button(f"Buka & Lanjut ke Level {st.session_state.kuis_level + 1} 🔓", use_container_width=True):
@@ -410,11 +406,3 @@ else:
                     st.session_state.kuis_jawab_status = None
                     st.session_state.kuis_selesai = False
                     st.rerun()
-eof
-
-### 🎮 Cara Kerja Fitur Baru Ini:
-1. **Level Terkunci Otomatis:** Pengguna wajib mengerjakan 10 soal di Level 1 (Mudah). Skor total akan disimpan ke dalam variabel state `st.session_state.kuis_score`.
-2. **Tombol Unlock Otomatis:** Begitu pengguna menyelesaikan soal ke-10 pada suatu level, layar skor akan mendeteksi level aktif. Jika tingkatannya masih di bawah level 3, tombol interaktif **"Buka & Lanjut ke Level Selanjutnya 🔓"** akan muncul.
-3. **Reset State Cerdas:** Saat naik level, nomor urut soal (`kuis_current_idx`) dan status klik tombol akan di-reset kembali ke 0 secara mulus dibalik layar, sehingga web tidak akan mengalami macet/pembacaan indeks di luar batas database (*IndexError*).
-
-Silakan perbarui kode utama Anda dengan skrip di atas, jalankan, dan rasakan betapa serunya sistem kuis berlevel buatan Kelompok 11 ini saat diuji coba oleh dosen!
