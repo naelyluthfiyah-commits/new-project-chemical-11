@@ -566,7 +566,7 @@ if st.button("Jalankan Reaksi Kustom 🧪"):
     st.markdown("#### 📚 Pustaka Reaksi Kimia Organik Lengkap")
     st.write("Gunakan pilihan menu di bawah untuk mempelajari berbagai jenis reaksi organik esensial:")
 
-        opsi_reaksi = st.selectbox(
+    opsi_reaksi = st.selectbox(
             "Pilih Contoh Reaksi Kimia dari Database:",
             [
                 "1. Alkilasi Friedel-Crafts (Benzena + CH3Cl)", 
