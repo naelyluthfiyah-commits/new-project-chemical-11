@@ -396,7 +396,7 @@ with tab2:
                 rumus_produk = "C_6H_5OCH_3"
                 penjelasan_kustom = "Natrium fenoksida bereaksi dengan metil halida menghasilkan eter aromatik."
             elif gugus_reagen == "Ester (-COOCH3)":
-            tipe_reaksi_kustom = "Esterifikasi / Substitusi Asil"
+                tipe_reaksi_kustom = "Esterifikasi / Substitusi Asil"
             if "Metil" in nama_induk:
                 nama_produk = "Metil Asetat"
                 rumus_produk = "CH_3COOCH_3"
