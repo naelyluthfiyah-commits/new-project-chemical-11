@@ -559,6 +559,7 @@ if st.button("Jalankan Reaksi Kustom 🧪"):
     
         # Garis pembatas antar fitur
         st.markdown("<hr style='border: 0.5px dashed #b2bec3; margin: 30px 0;'>", unsafe_allow_html=True)
+
         # ----------------------------------------------------
         # DATABASE REAKSI STATIS
         # ----------------------------------------------------
