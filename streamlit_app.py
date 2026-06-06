@@ -410,7 +410,7 @@ else:
                     st.session_state.kuis_jawab_status = None
                     st.session_state.kuis_selesai = False
                     st.rerun()
-```eof
+eof
 
 ### 🎮 Cara Kerja Fitur Baru Ini:
 1. **Level Terkunci Otomatis:** Pengguna wajib mengerjakan 10 soal di Level 1 (Mudah). Skor total akan disimpan ke dalam variabel state `st.session_state.kuis_score`.
