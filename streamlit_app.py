@@ -33,7 +33,7 @@ if "kuis_selesai" not in st.session_state:
 
 # Konfigurasi Halaman Utama
 st.set_page_config(
-    page_title="ChemExplorer Pro - Kelompok Kimia", 
+    page_title="Organic Chemistry - Kelompok Kimia", 
     layout="wide",
     page_icon="🧪"
 )
@@ -280,12 +280,12 @@ else:
     st.sidebar.markdown("""
     ### 🧬 Menu Navigasi
     Gunakan tab menu di sebelah kanan layar untuk beralih fitur:
-    * **🔍 Penjelajah 3D:** Cari senyawa ramah Bahasa Indonesia.
+    * **🔍 Penjelajah Senyawa:** Cari senyawa ramah Bahasa Indonesia.
     * **⚡ Lab Reaksi Organik:** Pilih senyawa dan pereaksinya.
     * **📝 Kuis Tata Nama:** Evaluasi interaktif satu per satu soal.
     """)
 
-    tab1, tab2, tab3 = st.tabs(["🔍 Penjelajah 3D", "⚡ Lab Reaksi Organik", "📝 Kuis Tata Nama"])
+    tab1, tab2, tab3 = st.tabs(["🔍 Penjelajah Senyawa", "⚡ Lab Reaksi Organik", "📝 Kuis Tata Nama"])
 
     # ==========================================
     # TAB 1: PENJELAJAH SENYAWA 3D
