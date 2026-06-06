@@ -78,10 +78,10 @@ colors = [
 
 # Data Anggota Kelompok Sesuai Request
 members_data = [
-    {"nama": "Andika Dwi Prashojo", "nim": "NIM. 2560571", "role": "Project Leader", "color": colors[0]},
-    {"nama": "Jawaher Sabrina Alodya A. S.", "nim": "NIM. 2560648", "role": "Data Analyst (API)", "color": colors[1]},
-    {"nama": "Naely Luthfiyah Arif", "nim": "NIM. 2560698", "role": "3D Visual Specialist", "color": colors[2]},
-    {"nama": "Salwa Azka Sabana", "nim": "NIM. 2560767", "role": "Content & QA Specialist", "color": colors[3]},
+    {"nama": "Andika Dwi Prashojo", "nim": "NIM. 2560571", "color": colors[0]},
+    {"nama": "Jawaher Sabrina Alodya A. S.", "nim": "NIM. 2560648", "color": colors[1]},
+    {"nama": "Naely Luthfiyah Arif", "nim": "NIM. 2560698", "color": colors[2]},
+    {"nama": "Salwa Azka Sabana", "nim": "NIM. 2560767", "color": colors[3]},
 ]
 
 for idx, col in enumerate(member_cols):
