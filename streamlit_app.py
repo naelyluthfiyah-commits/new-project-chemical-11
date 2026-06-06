@@ -390,12 +390,14 @@ else:
                 penjelasan = "Metil halida diserang oleh nukleofil hidroksida (OH⁻) melalui reaksi satu tahap (SN2) menghasilkan Metanol."
                 # REAKSI DIPERBAIKI: Subskrip (_) dipindah ke luar \text agar menjadi rumus kimia asli yang rapi
                 rumus_latex = r"\text{CH}_3\text{-} + \text{-OH} \longrightarrow \text{CH}_3\text{OH}"
+                
             elif "Etil" in rantai_alkil and "Alkohol" in gugus_reagen:
                 tipe_rx = "Substitusi Nukleofilik (Pembentukan Alkohol)"
                 nama_p = "Etanol"
                 penjelasan = "Etil halida diserang oleh nukleofil hidroksida (OH⁻) melalui reaksi satu tahap (SN2) menghasilkan Etanol."
                 rumus_latex = r"\text{C}_2\text{H}_5\text{-} + \text{-OH} \longrightarrow \text{C}_2\text{H}_5\text{OH}"
-                elif "Propil" in rantai_alkil and "Alkohol" in gugus_reagen:
+                
+            elif "Propil" in rantai_alkil and "Alkohol" in gugus_reagen:
                 tipe_rx = "Substitusi Nukleofilik (Pembentukan Alkohol)"
                 nama_p = "1-Propanol"
                 penjelasan = "Propil halida diserang oleh nukleofil hidroksida (OH⁻) melalui reaksi satu tahap (SN2) menghasilkan 1-Propanol."
