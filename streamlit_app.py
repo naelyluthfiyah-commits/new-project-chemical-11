@@ -383,180 +383,180 @@ else:
                 ["Alkohol (-OH)", "Aldehid (-CHO)", "Keton (-CO-CH3)", "Asam Karboksilat (-COOH)", "Eter (-O-CH3)"]
             )
 
-            if st.button("Jalankan Reaksi Kustom 🧪"):
-            # ==================== KELOMPOK METIL ====================
-                if "Metil" in rantai_alkil and "Alkohol" in gugus_reagen:
-                tipe_rx = "Substitusi Nukleofilik (SN2)"
-                nama_p = "Metanol"
-                penjelasan = "Metil halida diserang oleh nukleofil hidroksida (OH⁻) menghasilkan senyawa alkohol paling sederhana yaitu Metanol."
-                rumus_latex = r"\text{CH}_3\text{-} + \text{-OH} \longrightarrow \text{CH}_3\text{OH}"
-                
-            elif "Metil" in rantai_alkil and "Aldehid" in gugus_reagen:
-                tipe_rx = "Sintesis Alkanal (Perpanjangan Rantai)"
-                nama_p = "Etanal (Asetaldehid)"
-                penjelasan = "Penggabungan gugus metil dengan gugus fungsi aldehid (-CHO) membentuk senyawa golongan alkanal rantai dua karbon yaitu Etanal."
-                rumus_latex = r"\text{CH}_3\text{-} + \text{-CHO} \longrightarrow \text{CH}_3\text{CHO}"
-                
-            elif "Metil" in rantai_alkil and "Keton" in gugus_reagen:
-                tipe_rx = "Sintesis Alkanon"
-                nama_p = "Propanon (Aseton)"
-                penjelasan = "Gugus metil berikatan dengan gugus fungsi keton (-CO-CH3) menghasilkan senyawa keton komersial bernama Propanon atau Aseton."
-                rumus_latex = r"\text{CH}_3\text{-} + \text{-CO-CH}_3 \longrightarrow \text{CH}_3\text{COCH}_3"
-                
-            elif "Metil" in rantai_alkil and "Asam Karboksilat" in gugus_reagen:
-                tipe_rx = "Sintesis Asam Alkanoat"
-                nama_p = "Asam Etanoat (Asam Asetat)"
-                penjelasan = "Gugus metil berikatan dengan gugus karboksilat (-COOH) menghasilkan senyawa asam cuka rumah tangga atau Asam Etanoat."
-                rumus_latex = r"\text{CH}_3\text{-} + \text{-COOH} \longrightarrow \text{CH}_3\text{COOH}"
-                
-            elif "Metil" in rantai_alkil and "Eter" in gugus_reagen:
-                tipe_rx = "Sintesis Eter Simetris"
-                nama_p = "Dimetil Eter"
-                penjelasan = "Reaksi antara gugus metil dan gugus metoksi (-O-CH3) menghasilkan senyawa eter simetris bernama Dimetil Eter."
-                rumus_latex = r"\text{CH}_3\text{-} + \text{-O-CH}_3 \longrightarrow \text{CH}_3\text{OCH}_3"
+          if st.button("Jalankan Reaksi Kustom 🧪"):
+    # ==================== KELOMPOK METIL ====================
+    if "Metil" in rantai_alkil and "Alkohol" in gugus_reagen:
+        tipe_rx = "Substitusi Nukleofilik (SN2)"
+        nama_p = "Metanol"
+        penjelasan = "Metil halida diserang oleh nukleofil hidroksida (OH⁻) menghasilkan senyawa alkohol paling sederhana yaitu Metanol."
+        rumus_latex = r"\text{CH}_3\text{-} + \text{-OH} \longrightarrow \text{CH}_3\text{OH}"
+        
+    elif "Metil" in rantai_alkil and "Aldehid" in gugus_reagen:
+        tipe_rx = "Sintesis Alkanal (Perpanjangan Rantai)"
+        nama_p = "Etanal (Asetaldehid)"
+        penjelasan = "Penggabungan gugus metil dengan gugus fungsi aldehid (-CHO) membentuk senyawa golongan alkanal rantai dua karbon yaitu Etanal."
+        rumus_latex = r"\text{CH}_3\text{-} + \text{-CHO} \longrightarrow \text{CH}_3\text{CHO}"
+        
+    elif "Metil" in rantai_alkil and "Keton" in gugus_reagen:
+        tipe_rx = "Sintesis Alkanon"
+        nama_p = "Propanon (Aseton)"
+        penjelasan = "Gugus metil berikatan dengan gugus fungsi keton (-CO-CH3) menghasilkan senyawa keton komersial bernama Propanon atau Aseton."
+        rumus_latex = r"\text{CH}_3\text{-} + \text{-CO-CH}_3 \longrightarrow \text{CH}_3\text{COCH}_3"
+        
+    elif "Metil" in rantai_alkil and "Asam Karboksilat" in gugus_reagen:
+        tipe_rx = "Sintesis Asam Alkanoat"
+        nama_p = "Asam Etanoat (Asam Asetat)"
+        penjelasan = "Gugus metil berikatan dengan gugus karboksilat (-COOH) menghasilkan senyawa asam cuka rumah tangga atau Asam Etanoat."
+        rumus_latex = r"\text{CH}_3\text{-} + \text{-COOH} \longrightarrow \text{CH}_3\text{COOH}"
+        
+    elif "Metil" in rantai_alkil and "Eter" in gugus_reagen:
+        tipe_rx = "Sintesis Eter Simetris"
+        nama_p = "Dimetil Eter"
+        penjelasan = "Reaksi antara gugus metil dan gugus metoksi (-O-CH3) menghasilkan senyawa eter simetris bernama Dimetil Eter."
+        rumus_latex = r"\text{CH}_3\text{-} + \text{-O-CH}_3 \longrightarrow \text{CH}_3\text{OCH}_3"
 
-            # ==================== KELOMPOK ETIL ====================
-            elif "Etil" in rantai_alkil and "Alkohol" in gugus_reagen:
-                tipe_rx = "Substitusi Nukleofilik (SN2)"
-                nama_p = "Etanol"
-                penjelasan = "Etil halida diserang oleh nukleofil hidroksida (OH⁻) melalui reaksi satu tahap (SN2) menghasilkan Etanol."
-                rumus_latex = r"\text{C}_2\text{H}_5\text{-} + \text{-OH} \longrightarrow \text{C}_2\text{H}_5\text{OH}"
-                
-            elif "Etil" in rantai_alkil and "Aldehid" in gugus_reagen:
-                tipe_rx = "Sintesis Alkanal"
-                nama_p = "Propanal"
-                penjelasan = "Gugus etil berikatan dengan gugus fungsi aldehid (-CHO) membentuk senyawa alkanal rantai tiga karbon yaitu Propanal."
-                rumus_latex = r"\text{C}_2\text{H}_5\text{-} + \text{-CHO} \longrightarrow \text{C}_2\text{H}_5\text{CHO}"
-                
-            elif "Etil" in rantai_alkil and "Keton" in gugus_reagen:
-                tipe_rx = "Sintesis Alkanon"
-                nama_p = "2-Butanon"
-                penjelasan = "Gugus etil berikatan dengan gugus keton (-CO-CH3) menghasilkan senyawa alkanon cair rantai empat karbon yaitu 2-Butanon."
-                rumus_latex = r"\text{C}_2\text{H}_5\text{-} + \text{-CO-CH}_3 \longrightarrow \text{C}_2\text{H}_5\text{COCH}_3"
-                
-            elif "Etil" in rantai_alkil and "Asam Karboksilat" in gugus_reagen:
-                tipe_rx = "Sintesis Asam Alkanoat"
-                nama_p = "Asam Propanoat"
-                penjelasan = "Gugus etil berikatan dengan gugus karboksilat (-COOH) menghasilkan senyawa asam propanoat murni."
-                rumus_latex = r"\text{C}_2\text{H}_5\text{-} + \text{-COOH} \longrightarrow \text{C}_2\text{H}_5\text{COOH}"
-                
-            elif "Etil" in rantai_alkil and "Eter" in gugus_reagen:
-                tipe_rx = "Sintesis Eter Asimetris"
-                nama_p = "Etil Metil Eter"
-                penjelasan = "Gugus etil berikatan dengan gugus metoksi (-O-CH3) menghasilkan rantai eter campuran bernama Etil Metil Eter."
-                rumus_latex = r"\text{C}_2\text{H}_5\text{-} + \text{-O-CH}_3 \longrightarrow \text{C}_2\text{H}_5\text{OCH}_3"
+    # ==================== KELOMPOK ETIL ====================
+    elif "Etil" in rantai_alkil and "Alkohol" in gugus_reagen:
+        tipe_rx = "Substitusi Nukleofilik (SN2)"
+        nama_p = "Etanol"
+        penjelasan = "Etil halida diserang oleh nukleofil hidroksida (OH⁻) melalui reaksi satu tahap (SN2) menghasilkan Etanol."
+        rumus_latex = r"\text{C}_2\text{H}_5\text{-} + \text{-OH} \longrightarrow \text{C}_2\text{H}_5\text{OH}"
+        
+    elif "Etil" in rantai_alkil and "Aldehid" in gugus_reagen:
+        tipe_rx = "Sintesis Alkanal"
+        nama_p = "Propanal"
+        penjelasan = "Gugus etil berikatan dengan gugus fungsi aldehid (-CHO) membentuk senyawa alkanal rantai tiga karbon yaitu Propanal."
+        rumus_latex = r"\text{C}_2\text{H}_5\text{-} + \text{-CHO} \longrightarrow \text{C}_2\text{H}_5\text{CHO}"
+        
+    elif "Etil" in rantai_alkil and "Keton" in gugus_reagen:
+        tipe_rx = "Sintesis Alkanon"
+        nama_p = "2-Butanon"
+        penjelasan = "Gugus etil berikatan dengan gugus keton (-CO-CH3) menghasilkan senyawa alkanon cair rantai empat karbon yaitu 2-Butanon."
+        rumus_latex = r"\text{C}_2\text{H}_5\text{-} + \text{-CO-CH}_3 \longrightarrow \text{C}_2\text{H}_5\text{COCH}_3"
+        
+    elif "Etil" in rantai_alkil and "Asam Karboksilat" in gugus_reagen:
+        tipe_rx = "Sintesis Asam Alkanoat"
+        nama_p = "Asam Propanoat"
+        penjelasan = "Gugus etil berikatan dengan gugus karboksilat (-COOH) menghasilkan senyawa asam propanoat murni."
+        rumus_latex = r"\text{C}_2\text{H}_5\text{-} + \text{-COOH} \longrightarrow \text{C}_2\text{H}_5\text{COOH}"
+        
+    elif "Etil" in rantai_alkil and "Eter" in gugus_reagen:
+        tipe_rx = "Sintesis Eter Asimetris"
+        nama_p = "Etil Metil Eter"
+        penjelasan = "Gugus etil berikatan dengan gugus metoksi (-O-CH3) menghasilkan rantai eter campuran bernama Etil Metil Eter."
+        rumus_latex = r"\text{C}_2\text{H}_5\text{-} + \text{-O-CH}_3 \longrightarrow \text{C}_2\text{H}_5\text{OCH}_3"
 
-            # ==================== KELOMPOK PROPIL ====================
-            elif "Propil" in rantai_alkil and "Alkohol" in gugus_reagen:
-                tipe_rx = "Substitusi Nukleofilik"
-                nama_p = "1-Propanol"
-                penjelasan = "Propil halida rantai lurus diserang oleh nukleofil hidroksida (OH⁻) menghasilkan senyawa alkohol primer 1-Propanol."
-                rumus_latex = r"\text{C}_3\text{H}_7\text{-} + \text{-OH} \longrightarrow \text{C}_3\text{H}_7\text{OH}"
-                
-            elif "Propil" in rantai_alkil and "Aldehid" in gugus_reagen:
-                tipe_rx = "Sintesis Alkanal"
-                nama_p = "Butanal"
-                penjelasan = "Gugus propil berikatan dengan gugus fungsi aldehid menghasilkan senyawa alkanal rantai empat karbon yaitu Butanal."
-                rumus_latex = r"\text{C}_3\text{H}_7\text{-} + \text{-CHO} \longrightarrow \text{C}_3\text{H}_7\text{CHO}"
-                
-            elif "Propil" in rantai_alkil and "Keton" in gugus_reagen:
-                tipe_rx = "Sintesis Alkanon"
-                nama_p = "2-Pentanon"
-                penjelasan = "Gugus propil berikatan dengan gugus keton (-CO-CH3) menghasilkan senyawa alkanon rantai lima karbon yaitu 2-Pentanon."
-                rumus_latex = r"\text{C}_3\text{H}_7\text{-} + \text{-CO-CH}_3 \longrightarrow \text{C}_3\text{H}_7\text{COCH}_3"
-                
-            elif "Propil" in rantai_alkil and "Asam Karboksilat" in gugus_reagen:
-                tipe_rx = "Sintesis Asam Alkanoat"
-                nama_p = "Asam Butanoat"
-                penjelasan = "Gugus propil berikatan dengan gugus karboksilat (-COOH) menghasilkan asam butanoat (senyawa beraroma khas)."
-                rumus_latex = r"\text{C}_3\text{H}_7\text{-} + \text{-COOH} \longrightarrow \text{C}_3\text{H}_7\text{COOH}"
-                
-            elif "Propil" in rantai_alkil and "Eter" in gugus_reagen:
-                tipe_rx = "Sintesis Eter"
-                nama_p = "Metil Propil Eter"
-                penjelasan = "Gugus propil berikatan dengan gugus metoksi (-O-CH3) menghasilkan senyawa Metil Propil Eter."
-                rumus_latex = r"\text{C}_3\text{H}_7\text{-} + \text{-O-CH}_3 \longrightarrow \text{C}_3\text{H}_7\text{OCH}_3"
+    # ==================== KELOMPOK PROPIL ====================
+    elif "Propil" in rantai_alkil and "Alkohol" in gugus_reagen:
+        tipe_rx = "Substitusi Nukleofilik"
+        nama_p = "1-Propanol"
+        penjelasan = "Propil halida rantai lurus diserang oleh nukleofil hidroksida (OH⁻) menghasilkan senyawa alkohol primer 1-Propanol."
+        rumus_latex = r"\text{C}_3\text{H}_7\text{-} + \text{-OH} \longrightarrow \text{C}_3\text{H}_7\text{OH}"
+        
+    elif "Propil" in rantai_alkil and "Aldehid" in gugus_reagen:
+        tipe_rx = "Sintesis Alkanal"
+        nama_p = "Butanal"
+        penjelasan = "Gugus propil berikatan dengan gugus fungsi aldehid menghasilkan senyawa alkanal rantai empat karbon yaitu Butanal."
+        rumus_latex = r"\text{C}_3\text{H}_7\text{-} + \text{-CHO} \longrightarrow \text{C}_3\text{H}_7\text{CHO}"
+        
+    elif "Propil" in rantai_alkil and "Keton" in gugus_reagen:
+        tipe_rx = "Sintesis Alkanon"
+        nama_p = "2-Pentanon"
+        penjelasan = "Gugus propil berikatan dengan gugus keton (-CO-CH3) menghasilkan senyawa alkanon rantai lima karbon yaitu 2-Pentanon."
+        rumus_latex = r"\text{C}_3\text{H}_7\text{-} + \text{-CO-CH}_3 \longrightarrow \text{C}_3\text{H}_7\text{COCH}_3"
+        
+    elif "Propil" in rantai_alkil and "Asam Karboksilat" in gugus_reagen:
+        tipe_rx = "Sintesis Asam Alkanoat"
+        nama_p = "Asam Butanoat"
+        penjelasan = "Gugus propil berikatan dengan gugus karboksilat (-COOH) menghasilkan asam butanoat (senyawa beraroma khas)."
+        rumus_latex = r"\text{C}_3\text{H}_7\text{-} + \text{-COOH} \longrightarrow \text{C}_3\text{H}_7\text{COOH}"
+        
+    elif "Propil" in rantai_alkil and "Eter" in gugus_reagen:
+        tipe_rx = "Sintesis Eter"
+        nama_p = "Metil Propil Eter"
+        penjelasan = "Gugus propil berikatan dengan gugus metoksi (-O-CH3) menghasilkan senyawa Metil Propil Eter."
+        rumus_latex = r"\text{C}_3\text{H}_7\text{-} + \text{-O-CH}_3 \longrightarrow \text{C}_3\text{H}_7\text{OCH}_3"
 
-            # ==================== KELOMPOK ISOPROPIL ====================
-            elif "Isopropil" in rantai_alkil and "Alkohol" in gugus_reagen:
-                tipe_rx = "Substitusi Nukleofilik"
-                nama_p = "2-Propanol (Isopropanol)"
-                penjelasan = "Isopropil halida diserang oleh nukleofil hidroksida (OH⁻) menghasilkan senyawa alkohol sekunder 2-Propanol."
-                rumus_latex = r"\text{(CH}_3\text{)}_2\text{CH-} + \text{-OH} \longrightarrow \text{(CH}_3\text{)}_2\text{CHOH}"
-                
-            elif "Isopropil" in rantai_alkil and "Aldehid" in gugus_reagen:
-                tipe_rx = "Sintesis Alkanal Bercabang"
-                nama_p = "2-Metilpropanal"
-                penjelasan = "Gugus isopropil bercabang berikatan dengan gugus aldehid (-CHO) membentuk senyawa 2-Metilpropanal."
-                rumus_latex = r"\text{(CH}_3\text{)}_2\text{CH-} + \text{-CHO} \longrightarrow \text{(CH}_3\text{)}_2\text{CHCHO}"
-                
-            elif "Isopropil" in rantai_alkil and "Keton" in gugus_reagen:
-                tipe_rx = "Sintesis Alkanon Bercabang"
-                nama_p = "3-Metil-2-butanon"
-                penjelasan = "Gugus isopropil berikatan dengan gugus keton (-CO-CH3) membentuk keton bercabang 3-Metil-2-butanon."
-                rumus_latex = r"\text{(CH}_3\text{)}_2\text{CH-} + \text{-CO-CH}_3 \longrightarrow \text{(CH}_3\text{)}_2\text{CHCOCH}_3"
-                
-            elif "Isopropil" in rantai_alkil and "Asam Karboksilat" in gugus_reagen:
-                tipe_rx = "Sintesis Asam Karboksilat Bercabang"
-                nama_p = "Asam 2-Metilpropanoat"
-                penjelasan = "Gugus isopropil berikatan dengan gugus karboksilat (-COOH) menghasilkan Asam 2-Metilpropanoat (Asam Isobutirat)."
-                rumus_latex = r"\text{(CH}_3\text{)}_2\text{CH-} + \text{-COOH} \longrightarrow \text{(CH}_3\text{)}_2\text{CHCOOH}"
-                
-            elif "Isopropil" in rantai_alkil and "Eter" in gugus_reagen:
-                tipe_rx = "Sintesis Eter"
-                nama_p = "Isopropil Metil Eter"
-                penjelasan = "Gugus isopropil berikatan dengan gugus metoksi (-O-CH3) menghasilkan Isopropil Metil Eter."
-                rumus_latex = r"\text{(CH}_3\text{)}_2\text{CH-} + \text{-O-CH}_3 \longrightarrow \text{(CH}_3\text{)}_2\text{CHOCH}_3"
+    # ==================== KELOMPOK ISOPROPIL ====================
+    elif "Isopropil" in rantai_alkil and "Alkohol" in gugus_reagen:
+        tipe_rx = "Substitusi Nukleofilik"
+        nama_p = "2-Propanol (Isopropanol)"
+        penjelasan = "Isopropil halida diserang oleh nukleofil hidroksida (OH⁻) menghasilkan senyawa alkohol sekunder 2-Propanol."
+        rumus_latex = r"\text{(CH}_3\text{)}_2\text{CH-} + \text{-OH} \longrightarrow \text{(CH}_3\text{)}_2\text{CHOH}"
+        
+    elif "Isopropil" in rantai_alkil and "Aldehid" in gugus_reagen:
+        tipe_rx = "Sintesis Alkanal Bercabang"
+        nama_p = "2-Metilpropanal"
+        penjelasan = "Gugus isopropil bercabang berikatan dengan gugus aldehid (-CHO) membentuk senyawa 2-Metilpropanal."
+        rumus_latex = r"\text{(CH}_3\text{)}_2\text{CH-} + \text{-CHO} \longrightarrow \text{(CH}_3\text{)}_2\text{CHCHO}"
+        
+    elif "Isopropil" in rantai_alkil and "Keton" in gugus_reagen:
+        tipe_rx = "Sintesis Alkanon Bercabang"
+        nama_p = "3-Metil-2-butanon"
+        penjelasan = "Gugus isopropil berikatan dengan gugus keton (-CO-CH3) membentuk keton bercabang 3-Metil-2-butanon."
+        rumus_latex = r"\text{(CH}_3\text{)}_2\text{CH-} + \text{-CO-CH}_3 \longrightarrow \text{(CH}_3\text{)}_2\text{CHCOCH}_3"
+        
+    elif "Isopropil" in rantai_alkil and "Asam Karboksilat" in gugus_reagen:
+        tipe_rx = "Sintesis Asam Karboksilat Bercabang"
+        nama_p = "Asam 2-Metilpropanoat"
+        penjelasan = "Gugus isopropil berikatan dengan gugus karboksilat (-COOH) menghasilkan Asam 2-Metilpropanoat (Asam Isobutirat)."
+        rumus_latex = r"\text{(CH}_3\text{)}_2\text{CH-} + \text{-COOH} \longrightarrow \text{(CH}_3\text{)}_2\text{CHCOOH}"
+        
+    elif "Isopropil" in rantai_alkil and "Eter" in gugus_reagen:
+        tipe_rx = "Sintesis Eter"
+        nama_p = "Isopropil Metil Eter"
+        penjelasan = "Gugus isopropil berikatan dengan gugus metoksi (-O-CH3) menghasilkan Isopropil Metil Eter."
+        rumus_latex = r"\text{(CH}_3\text{)}_2\text{CH-} + \text{-O-CH}_3 \longrightarrow \text{(CH}_3\text{)}_2\text{CHOCH}_3"
 
-            # ==================== KELOMPOK FENIL ====================
-            elif "Fenil" in rantai_alkil and "Alkohol" in gugus_reagen:
-                tipe_rx = "Substitusi Nukleofilik Aromatik"
-                nama_p = "Fenol"
-                penjelasan = "Gugus fenil/benzena berikatan dengan nukleofil hidroksida (OH⁻) menghasilkan senyawa alkohol aromatik bernama Fenol."
-                rumus_latex = r"\text{C}_6\text{H}_5\text{-} + \text{-OH} \longrightarrow \text{C}_6\text{H}_5\text{OH}"
-                
-            elif "Fenil" in rantai_alkil and "Aldehid" in gugus_reagen:
-                tipe_rx = "Sintesis Alkanal Aromatik"
-                nama_p = "Benzaldehid"
-                penjelasan = "Gugus fenil berikatan langsung dengan gugus fungsi aldehid (-CHO) membentuk senyawa Benzena primer aromatik yaitu Benzaldehid."
-                rumus_latex = r"\text{C}_6\text{H}_5\text{-} + \text{-CHO} \longrightarrow \text{C}_6\text{H}_5\text{CHO}"
-                
-            elif "Fenil" in rantai_alkil and "Keton" in gugus_reagen:
-                tipe_rx = "Asilasi Friedel-Crafts / Sintesis Keton Aromatik"
-                nama_p = "Asetofenon"
-                penjelasan = "Gugus fenil berikatan dengan gugus keton (-CO-CH3) menghasilkan senyawa keton aromatik industri bernama Asetofenon."
-                rumus_latex = r"\text{C}_6\text{H}_5\text{-} + \text{-CO-CH}_3 \longrightarrow \text{C}_6\text{H}_5\text{COCH}_3"
-                
-            elif "Fenil" in rantai_alkil and "Asam Karboksilat" in gugus_reagen:
-                tipe_rx = "Sintesis Asam Karboksilat Aromatik"
-                nama_p = "Asam Benzoat"
-                penjelasan = "Gugus fenil berikatan dengan gugus karboksilat (-COOH) membentuk senyawa asam aromatik esensial pengawet bernama Asam Benzoat."
-                rumus_latex = r"\text{C}_6\text{H}_5\text{-} + \text{-COOH} \longrightarrow \text{C}_6\text{H}_5\text{COOH}"
-                
-            elif "Fenil" in rantai_alkil and "Eter" in gugus_reagen:
-                tipe_rx = "Sintesis Eter Aromatik"
-                nama_p = "Anisol (Metoksibenzena)"
-                penjelasan = "Gugus fenil berikatan dengan gugus metoksi (-O-CH3) membentuk senyawa eter aromatik Anisol."
-                rumus_latex = r"\text{C}_6\text{H}_5\text{-} + \text{-O-CH}_3 \longrightarrow \text{C}_6\text{H}_5\text{OCH}_3"
+    # ==================== KELOMPOK FENIL ====================
+    elif "Fenil" in rantai_alkil and "Alkohol" in gugus_reagen:
+        tipe_rx = "Substitusi Nukleofilik Aromatik"
+        nama_p = "Fenol"
+        penjelasan = "Gugus fenil/benzena berikatan dengan nukleofil hidroksida (OH⁻) menghasilkan senyawa alkohol aromatik bernama Fenol."
+        rumus_latex = r"\text{C}_6\text{H}_5\text{-} + \text{-OH} \longrightarrow \text{C}_6\text{H}_5\text{OH}"
+        
+    elif "Fenil" in rantai_alkil and "Aldehid" in gugus_reagen:
+        tipe_rx = "Sintesis Alkanal Aromatik"
+        nama_p = "Benzaldehid"
+        penjelasan = "Gugus fenil berikatan langsung dengan gugus fungsi aldehid (-CHO) membentuk senyawa Benzena primer aromatik yaitu Benzaldehid."
+        rumus_latex = r"\text{C}_6\text{H}_5\text{-} + \text{-CHO} \longrightarrow \text{C}_6\text{H}_5\text{CHO}"
+        
+    elif "Fenil" in rantai_alkil and "Keton" in gugus_reagen:
+        tipe_rx = "Asilasi Friedel-Crafts / Sintesis Keton Aromatik"
+        nama_p = "Asetofenon"
+        penjelasan = "Gugus fenil berikatan dengan gugus keton (-CO-CH3) menghasilkan senyawa keton aromatik industri bernama Asetofenon."
+        rumus_latex = r"\text{C}_6\text{H}_5\text{-} + \text{-CO-CH}_3 \longrightarrow \text{C}_6\text{H}_5\text{COCH}_3"
+        
+    elif "Fenil" in rantai_alkil and "Asam Karboksilat" in gugus_reagen:
+        tipe_rx = "Sintesis Asam Karboksilat Aromatik"
+        nama_p = "Asam Benzoat"
+        penjelasan = "Gugus fenil berikatan dengan gugus karboksilat (-COOH) membentuk senyawa asam aromatik esensial pengawet bernama Asam Benzoat."
+        rumus_latex = r"\text{C}_6\text{H}_5\text{-} + \text{-COOH} \longrightarrow \text{C}_6\text{H}_5\text{COOH}"
+        
+    elif "Fenil" in rantai_alkil and "Eter" in gugus_reagen:
+        tipe_rx = "Sintesis Eter Aromatik"
+        nama_p = "Anisol (Metoksibenzena)"
+        penjelasan = "Gugus fenil berikatan dengan gugus metoksi (-O-CH3) membentuk senyawa eter aromatik Anisol."
+        rumus_latex = r"\text{C}_6\text{H}_5\text{-} + \text{-O-CH}_3 \longrightarrow \text{C}_6\text{H}_5\text{OCH}_3"
 
-            else:
-                tipe_rx = "Reaksi Organik"
-                nama_p = "Produk Hasil Reaksi"
-                penjelasan = f"Reaksi antara {rantai_alkil} dan {gugus_reagen} berhasil disimulasikan."
-                rumus_latex = r"\text{R-} + \text{X} \longrightarrow \text{R-X}"
+    else:
+        tipe_rx = "Reaksi Organik"
+        nama_p = "Produk Hasil Reaksi"
+        penjelasan = f"Reaksi antara {rantai_alkil} dan {gugus_reagen} berhasil disimulasikan."
+        rumus_latex = r"\text{R-} + \text{X} \longrightarrow \text{R-X}"
 
-            # Tampilan Box Hasil Berwarna Hijau
-            st.markdown(f"""
-            <div style="background-color: #ebfffa; padding: 20px; border-radius: 12px; border: 1.5px solid #55efc4; margin-top:15px; margin-bottom: 15px;">
-                <h4 style="color: #00b894; margin-top:0;">🧬 JAWABAN REAKSI BERHASIL DIANALISIS!</h4>
-                <p><b>Tipe Reaksi:</b> {tipe_rx}</p>
-                <p><b>Nama IUPAC Produk:</b> <span style='color:red; font-weight:bold;'>{nama_p}</span></p>
-                <p><b>Mekanisme Reaksi:</b> {penjelasan}</p>
-            </div>
-            """, unsafe_allow_html=True)
-            
-            st.latex(rumus_latex)
-            
+    # Tampilan Box Hasil Berwarna Hijau
+    st.markdown(f"""
+    <div style="background-color: #ebfffa; padding: 20px; border-radius: 12px; border: 1.5px solid #55efc4; margin-top:15px; margin-bottom: 15px;">
+        <h4 style="color: #00b894; margin-top:0;">🧬 JAWABAN REAKSI BERHASIL DIANALISIS!</h4>
+        <p><b>Tipe Reaksi:</b> {tipe_rx}</p>
+        <p><b>Nama IUPAC Produk:</b> <span style='color:red; font-weight:bold;'>{nama_p}</span></p>
+        <p><b>Mekanisme Reaksi:</b> {penjelasan}</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.latex(rumus_latex)
+    
         # Garis pembatas antar fitur
         st.markdown("<hr style='border: 0.5px dashed #b2bec3; margin: 30px 0;'>", unsafe_allow_html=True)
         # ----------------------------------------------------
