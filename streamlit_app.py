@@ -359,13 +359,14 @@ else:
     # ==========================================
     # TAB 2: LAB REAKSI ORGANIK
     # ==========================================
-    with tab2:
-        st.markdown("<h3 style='color: #e17055;'>⚡ Laboratorium Mekanisme Reaksi Organik</h3>", unsafe_allow_html=True)
+   with tab2:
+        st.markdown("## ⚡ Laboratorium Mekanisme Reaksi Organik")
         
+        # --- BAGIAN 1: REAKTOR KUSTOM DINAMIS ---
         st.markdown("""
-        <div style="background-color: #fff9f4; padding: 25px; border-radius: 15px; border-left: 5px solid #ff7675; box-shadow: 0 4px 15px rgba(0,0,0,0.02); margin-bottom: 25px;">
-            <h4 style="color: #d63031; margin-top:0;">🛠️ Reaktor Kustom Dinamis</h4>
-            <p>Tentukan senyawa alkil (rantai induk) Anda, lalu reaksikan dengan berbagai reagen/gugus fungsi pilihan Anda di bawah ini!</p>
+        <div style="background-color: #fff9f5; padding: 15px; border-radius: 12px; border-left: 5px solid #ff7675; margin-bottom: 20px;">
+            <h3 style="margin: 0; color: #ff7675;">🔧 Reaktor Kustom Dinamis</h3>
+            <p style="margin: 5px 0 0 0; color: #636e72;">Tentukan senyawa alkil (rantai induk) Anda, lalu reaksikan dengan berbagai reagen/gugus fungsi pilihan Anda di bawah ini!</p>
         </div>
         """, unsafe_allow_html=True)
         
@@ -374,71 +375,16 @@ else:
         with col_input1:
             rantai_alkil = st.selectbox(
                 "Pilih Rantai Induk (Alkil/Aril):",
-                [
-                    "Metil (CH3-)", 
-                    "Etil (C2H5-)", 
-                    "Propil (C3H7-)", 
-                    "Isopropil ((CH3)2CH-)", 
-                    "Fenil/Benzena (C6H5-)"
-                ]
+                ["Metil (CH3-)", "Etil (C2H5-)", "Propil (C3H7-)", "Isopropil ((CH3)2CH-)", "Fenil/Benzena (C6H5-)"]
             )
-            
         with col_input2:
             gugus_reagen = st.selectbox(
                 "Pilih Gugus Fungsi Pereaksi:",
-                [
-                    "Alkohol (-OH)", 
-                    "Aldehid (-CHO)", 
-                    "Keton (-CO-CH3)", 
-                    "Asam Karboksilat (-COOH)", 
-                    "Eter (-O-CH3)", 
-                    "Ester (-COOCH3)", 
-                    "Halogen / Klorida (-Cl)",
-                    "Halogen / Bromida (-Br)"
-                ]
+                ["Alkohol (-OH)", "Aldehid (-CHO)", "Keton (-CO-CH3)", "Asam Karboksilat (-COOH)", "Eter (-O-CH3)"]
             )
             
         if st.button("Jalankan Reaksi Kustom 🧪"):
-            st.session_state.reaksi_dijalankan = True
-            
-            nama_induk = rantai_alkil.split(" (")[0]
-            formula_induk = rantai_alkil.split("(")[1].replace(")", "")
-            nama_pereaksi = gugus_reagen.split(" (")[0]
-            formula_pereaksi = gugus_reagen.split("(")[1].replace(")", "")
-            
-            nama_produk = ""
-            rumus_produk = ""
-            tipe_reaksi_kustom = ""
-            penjelasan_kustom = ""
-            
-            if gugus_reagen == "Alkohol (-OH)":
-                tipe_reaksi_kustom = "Substitusi Nukleofilik (Pembentukan Alkohol)"
-                if "Metil" in nama_induk:
-                    nama_produk = "Metanol"
-                    rumus_produk = "CH_3OH"
-                    penjelasan_kustom = "Metil halida diserang oleh nukleofil hidroksida (OH⁻) melalui reaksi satu tahap (SN2) menghasilkan Metanol."
-                    rumus_latex = r"\text{CH}_3\text{-} + \text{-OH} \longrightarrow \text{CH}_3\text{OH}"
-                elif "Etil" in nama_induk:
-                    nama_produk = "Etanol"
-                    rumus_produk = "C_2H_5OH"
-                    penjelasan_kustom = "Etil halida bereaksi dengan basa kuat encer (seperti NaOH encer) menghasilkan Etanol."
-                    rumus_latex = r"\text{C}_2\text{H}_5\text{-} + \text{-OH} \longrightarrow \text{C}_2\text{H}_5\text{OH}"
-                elif "Propil" in nama_induk:
-                    nama_produk = "1-Propanol"
-                    rumus_produk = "C_3H_7OH"
-                    penjelasan_kustom = "Substitusi nukleofilik pada karbon primer menghasilkan propanol primer."
-                elif "Isopropil" in nama_induk:
-                    nama_produk = "2-Propanol (Isopropanol)"
-                    rumus_produk = "(CH_3)_2CHOH"
-                    penjelasan_kustom = "Substitusi nukleofilik pada karbon sekunder menghasilkan alkohol sekunder."
-                elif "Fenil" in nama_induk:
-                    nama_produk = "Fenol"
-                    rumus_produk = "C_6H_5OH"
-                    penjelasan_kustom = "Dibuat dari hidrolisis klorobenzena pada kondisi suhu tinggi dan tekanan ekstrim (Proses Dow)."
-
-            elif gugus_reagen == "Aldehid (-CHO)":
-                tipe_reaksi_kustom = "Oksidasi / Karbonilasi"
-               if "Metil" in rantai_alkil and "Alkohol" in gugus_reagen:
+            if "Metil" in rantai_alkil and "Alkohol" in gugus_reagen:
                 tipe_rx = "Substitusi Nukleofilik (Pembentukan Alkohol)"
                 nama_p = "Metanol"
                 penjelasan = "Metil halida diserang oleh nukleofil hidroksida (OH⁻) melalui reaksi satu tahap (SN2) menghasilkan Metanol."
@@ -455,154 +401,21 @@ else:
                 penjelasan = f"Reaksi antara {rantai_alkil} dan {gugus_reagen} berhasil disimulasikan."
                 rumus_latex = r"\text{R-} + \text{X} \longrightarrow \text{R-X}"
 
-            elif gugus_reagen == "Keton (-CO-CH3)":
-                tipe_reaksi_kustom = "Asilasi Friedel-Crafts / Adisi"
-                if "Metil" in nama_induk:
-                    nama_produk = "Propanon (Aseton)"
-                    rumus_produk = "CH_3COCH_3"
-                    penjelasan_kustom = "Senyawa keton paling sederhana dan sering digunakan sebagai pelarut universal."
-                elif "Etil" in nama_induk:
-                    nama_produk = "Butanon"
-                    rumus_produk = "C_2H_5COCH_3"
-                    penjelasan_kustom = "Senyawa keton rantai lurus berkarbon empat."
-                elif "Propil" in nama_induk:
-                    nama_produk = "2-Pentanon"
-                    rumus_produk = "C_3H_7COCH_3"
-                    penjelasan_kustom = "Terbentuk senyawa keton asimetris dengan gugus fungsi karbonil di posisi karbon nomor dua."
-                elif "Isopropil" in nama_induk:
-                    nama_produk = "3-Metil-2-butanon"
-                    rumus_produk = "(CH_3)_2CHCOCH_3"
-                    penjelasan_kustom = "Keton bercabang yang mempertahankan struktur awal isopropil."
-                elif "Fenil" in nama_induk:
-                    nama_produk = "Asetofenon"
-                    rumus_produk = "C_6H_5COCH_3"
-                    penjelasan_kustom = "Dibuat lewat reaksi asilasi Friedel-Crafts benzena dengan bantuan asam Lewis AlCl3."
-
-            elif gugus_reagen == "Asam Karboksilat (-COOH)":
-                tipe_reaksi_kustom = "Karbonilasi / Hidrolisis"
-                if "Metil" in nama_induk:
-                    nama_produk = "Asam Etanoat (Asam Asetat)"
-                    rumus_produk = "CH_3COOH"
-                    penjelasan_kustom = "Oksidasi etanol secara biologis atau kimiawi menghasilkan senyawa cuka makan."
-                elif "Etil" in nama_induk:
-                    nama_produk = "Asam Propanoat"
-                    rumus_produk = "C_2H_5COOH"
-                    penjelasan_kustom = "Asam karboksilat berkarbon tiga."
-                elif "Propil" in nama_induk:
-                    nama_produk = "Asam Butanoat"
-                    rumus_produk = "C_3H_7COOH"
-                    penjelasan_kustom = "Asam karboksilat berkarbon empat yang beraroma menyengat mentega tengik."
-                elif "Isopropil" in nama_induk:
-                    nama_produk = "Asam 2-Metilpropanoat"
-                    rumus_produk = "(CH_3)_2CHCOOH"
-                    penjelasan_kustom = "Asam karboksilat bercabang."
-                elif "Fenil" in nama_induk:
-                    nama_produk = "Asam Benzoat"
-                    rumus_produk = "C_6H_5COOH"
-                    penjelasan_kustom = "Zat pengawet makanan yang didapat melalui oksidasi keras Toluena."
-
-            elif gugus_reagen == "Eter (-O-CH3)":
-                tipe_reaksi_kustom = "Sintesis Eter Williamson"
-                if "Metil" in nama_induk:
-                    nama_produk = "Metoksimetana (Dimetil Eter)"
-                    rumus_produk = "CH_3OCH_3"
-                    penjelasan_kustom = "Metoksida menyerang metil halida menghasilkan eter simetris terkecil."
-                elif "Etil" in nama_induk:
-                    nama_produk = "Metoksietana (Etil Metil Eter)"
-                    rumus_produk = "C_2H_5OCH_3"
-                    penjelasan_kustom = "Eter asimetris hasil reaksi natrium metoksida dan etil iodida."
-                elif "Propil" in nama_induk:
-                    nama_produk = "1-Metoksipropana"
-                    rumus_produk = "C_3H_7OCH_3"
-                    penjelasan_kustom = "Sintesis eter asimetris melalui substitusi nukleofilik."
-                elif "Isopropil" in nama_induk:
-                    nama_produk = "2-Metoksipropana"
-                    rumus_produk = "(CH_3)_2CHOCH_3"
-                    penjelasan_kustom = "Sintesis eter bercabang sekunder."
-                elif "Fenil" in nama_induk:
-                    nama_produk = "Anisol (Metoksibenzena)"
-                    rumus_produk = "C_6H_5OCH_3"
-                    penjelasan_kustom = "Natrium fenoksida bereaksi dengan metil halida menghasilkan eter aromatik."
-
-            elif gugus_reagen == "Ester (-COOCH3)":
-                tipe_reaksi_kustom = "Esterifikasi / Substitusi Asil"
-                if "Metil" in nama_induk:
-                    nama_produk = "Metil Asetat"
-                    rumus_produk = "CH_3COOCH_3"
-                    penjelasan_kustom = "Esterifikasi asam asetat dengan metanol."
-                elif "Etil" in nama_induk:
-                    nama_produk = "Metil Propanoat"
-                    rumus_produk = "C_2H_5COOCH_3"
-                    penjelasan_kustom = "Ester dengan aroma buah apel manis."
-                elif "Propil" in nama_induk:
-                    nama_produk = "Metil Butanoat"
-                    rumus_produk = "C_3H_7COOCH_3"
-                    penjelasan_kustom = "Ester dengan aroma nanas yang segar."
-                elif "Isopropil" in nama_induk:
-                    nama_produk = "Metil Isobutirat"
-                    rumus_produk = "(CH_3)_2CHCOOCH_3"
-                    penjelasan_kustom = "Ester bercabang dengan aroma manis buah-buahan."
-                elif "Fenil" in nama_induk:
-                    nama_produk = "Metil Benzoat"
-                    rumus_produk = "C_6H_5COOCH_3"
-                    penjelasan_kustom = "Terbentuk melalui reaksi kondensasi asam benzoat dan metanol."
-
-            elif "Halogen" in gugus_reagen:
-                hal_sym = "Cl" if "Klorida" in gugus_reagen else "Br"
-                hal_name = "Klorida" if "Klorida" in gugus_reagen else "Bromida"
-                hal_prefix = "Kloro" if "Klorida" in gugus_reagen else "Bromo"
-                tipe_reaksi_kustom = "Halogenasi Radikal Bebas / Substitusi Elektrofilik"
-                
-                if "Metil" in nama_induk:
-                    nama_produk = f"Metil {hal_name}"
-                    rumus_produk = f"CH_3{hal_sym}"
-                    penjelasan_kustom = "Substitusi radikal bebas alkana dengan gas halogen di bawah paparan sinar UV."
-                elif "Etil" in nama_induk:
-                    nama_produk = f"Etil {hal_name}"
-                    rumus_produk = f"C_2H_5{hal_sym}"
-                    penjelasan_kustom = "Halogenasi terkontrol pada senyawa etana."
-                elif "Propil" in nama_induk:
-                    nama_produk = f"1-{hal_prefix}propana"
-                    rumus_produk = f"C_3H_7{hal_sym}"
-                    penjelasan_kustom = "Halogenasi selektif propena pada suhu tinggi atau adisi peroksida."
-                elif "Isopropil" in nama_induk:
-                    nama_produk = f"2-{hal_prefix}propana"
-                    rumus_produk = f"(CH_3)_2CH{hal_sym}"
-                    penjelasan_kustom = "Adisi asam halida sesuai Hukum Markovnikov pada propena."
-                elif "Fenil" in nama_induk:
-                    nama_produk = f"{hal_prefix}benzena"
-                    rumus_produk = f"C_6H_5{hal_sym}"
-                    penjelasan_kustom = "Substitusi Elektrofilik Aromatik menggunakan katalis asam Lewis (FeCl3 atau FeBr3)."
-
-            st.session_state.reaksi_hasil = {
-                "induk": formula_induk,
-                "reagen": formula_pereaksi,
-                "tipe": tipe_reaksi_kustom,
-                "produk": nama_produk,
-                "rumus": rumus_produk,
-                "penjelasan": penjelasan_kustom
-            }
-
-        # Merender Hasil Reaksi secara persist (tetap ada di layar)
-        # --- PERBAIKAN: Format penulisan kode latex agar terender rapi ---
-        if st.session_state.reaksi_dijalankan:
-            res = st.session_state.reaksi_hasil
+            # Tampilan Box Hasil Berwarna Hijau
             st.markdown(f"""
-            <div style="background-color: #ebfffa; padding: 25px; border-radius: 12px; border: 1.5px solid #55efc4; margin-top: 20px;">
-                <h4 style="color: #00b894; margin-top: 0;">🎉 JAWABAN REAKSI BERHASIL DIANALISIS!</h4>
-                <table style="width: 100%; border-collapse: collapse; margin-bottom: 15px;">
-                    <tr><td style="width:30%; font-weight:bold;">Tipe Reaksi:</td><td>{res['tipe']}</td></tr>
-                    <tr><td style="font-weight:bold;">Nama IUPAC Produk:</td><td style="color:#d63031; font-weight:bold; font-size:16px;">{res['produk']}</td></tr>
-                </table>
-                <p><b>Mekanisme Reaksi:</b> {res['penjelasan']}</p>
+            <div style="background-color: #ebfffa; padding: 20px; border-radius: 12px; border: 1.5px solid #55efc4; margin-top:15px; margin-bottom: 15px;">
+                <h4 style="color: #00b894; margin-top:0;">🧬 JAWABAN REAKSI BERHASIL DIANALISIS!</h4>
+                <p><b>Tipe Reaksi:</b> {tipe_rx}</p>
+                <p><b>Nama IUPAC Produk:</b> <span style='color:red; font-weight:bold;'>{nama_p}</span></p>
+                <p><b>Mekanisme Reaksi:</b> {penjelasan}</p>
             </div>
             """, unsafe_allow_html=True)
             
-            # Merender persamaan kimia LaTeX dengan format matematis murni
-            st.latex(rf"\text{{{res['induk']}}} + \text{{{res['reagen']}}} \longrightarrow \text{{{res['rumus']}}}")
+            # Menampilkan rumus kimia kustom yang sudah rapi
+            st.latex(rumus_latex)
 
-        st.markdown("<hr style='border: 0.5px dashed #ccc;'>", unsafe_allow_html=True)
-
+        # Garis pembatas antar fitur
+        st.markdown("<hr style='border: 0.5px dashed #b2bec3; margin: 30px 0;'>", unsafe_allow_html=True)
         # ----------------------------------------------------
         # DATABASE REAKSI STATIS
         # ----------------------------------------------------
