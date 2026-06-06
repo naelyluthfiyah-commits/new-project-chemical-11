@@ -1,6 +1,5 @@
 import streamlit as st
 import requests
-import time
 
 # 1. JARING PENGAMAN IMPORT: Menjaga web tetap berjalan meskipun library kimia sedang dimuat
 try:
@@ -11,6 +10,18 @@ try:
 except ImportError as e:
     IMPORTS_SUCCESSFUL = False
     IMPORT_ERROR_MSG = str(e)
+
+# Inisialisasi Session State agar input dan hasil kuis/reaksi tidak hilang saat halaman memuat ulang
+if "kuis_dikirim" not in st.session_state:
+    st.session_state.kuis_dikirim = False
+if "skor_total" not in st.session_state:
+    st.session_state.skor_total = 0
+if "pembahasan" not in st.session_state:
+    st.session_state.pembahasan = []
+if "reaksi_dijalankan" not in st.session_state:
+    st.session_state.reaksi_dijalankan = False
+if "reaksi_hasil" not in st.session_state:
+    st.session_state.reaksi_hasil = {}
 
 # Konfigurasi Halaman Utama
 st.set_page_config(
@@ -26,18 +37,18 @@ st.markdown("""
         background-color: #f8f9fa;
     }
     /* Style untuk tombol Cari & Reaksi */
-    div.stButton > button:first-child {
-        background: linear-gradient(135deg, #ff7675, #6c5ce7);
-        color: white;
-        border: none;
-        padding: 10px 24px;
-        border-radius: 8px;
-        font-weight: bold;
-        transition: all 0.3s ease;
+    div.stButton > button {
+        background: linear-gradient(135deg, #ff7675, #6c5ce7) !important;
+        color: white !important;
+        border: none !important;
+        padding: 10px 24px !important;
+        border-radius: 8px !important;
+        font-weight: bold !important;
+        transition: all 0.3s ease !important;
     }
-    div.stButton > button:first-child:hover {
-        transform: scale(1.03);
-        box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
+    div.stButton > button:hover {
+        transform: scale(1.03) !important;
+        box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4) !important;
     }
     /* Gaya untuk Tab Navigasi */
     .stTabs [data-baseweb="tab"] {
@@ -72,8 +83,8 @@ member_cols = st.columns(4)
 colors = [
     {"bg": "#ffeaa7", "border": "#fdcb6e", "text": "#d35400", "emoji": "🧑‍💻"}, # Kuning Pastel
     {"bg": "#dff9fb", "border": "#c7ecee", "text": "#0984e3", "emoji": "👩‍🔬"}, # Biru Mint Pastel
-    {"bg": "#ffdfdf", "border": "#ff7675", "text": "#c0392b", "emoji": "👨‍🎨"}, # Pink/Merah Pastel
-    {"bg": "#ebfffa", "border": "#55efc4", "text": "#00b894", "emoji": "👩‍💻"}  # Hijau Pastel
+    {"bg": "#ffdfdf", "border": "#ff7675", "text": "#c0392b", "emoji": "👩‍💻"}, # Pink/Merah Pastel
+    {"bg": "#ebfffa", "border": "#55efc4", "text": "#00b894", "emoji": "🕵️‍♀️"}  # Hijau Pastel
 ]
 
 # Data Anggota Kelompok Sesuai Request
@@ -88,7 +99,7 @@ for idx, col in enumerate(member_cols):
     data = members_data[idx]
     with col:
         st.markdown(f"""
-        <div style="background-color: {data['color']['bg']}; padding: 20px; border-radius: 15px; border-top: 5px solid {data['color']['border']}; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); min-height: 180px; transition: transform 0.2s;">
+        <div style="background-color: {data['color']['bg']}; padding: 20px; border-radius: 15px; border-top: 5px solid {data['color']['border']}; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); min-height: 180px;">
             <div style="font-size: 30px; margin-bottom: 5px;">{data['color']['emoji']}</div>
             <h4 style="margin: 5px 0 2px 0; color: #2d3436; font-size: 15px; font-weight: bold;">{data['nama']}</h4>
             <p style="margin: 0; color: {data['color']['text']}; font-size: 13px; font-weight: bold;">{data['nim']}</p>
@@ -98,7 +109,52 @@ for idx, col in enumerate(member_cols):
 
 st.markdown("<hr style='border: 1px solid #dfe6e9; margin: 35px 0;'>", unsafe_allow_html=True)
 
-# 5. MENYUSUN NAVIGASI TABS
+# 5. FUNGSI DINAMIS UNTUK MENGAMBIL TITIK DIDIH DAN REAKTIVITAS DARI PUBCHEM API
+def get_boiling_point_and_safety(cid):
+    bp_val = "Tidak ditemukan di database eksperimental"
+    reactivity_val = "Stabil dalam kondisi normal. Hindari kontak langsung tanpa APD."
+    
+    try:
+        # Panggil API XML/JSON PubChem untuk data eksperimental detail
+        url = f"https://pubchem.ncbi.nlm.nih.gov/rest/pug_view/data/compound/{cid}/JSON/"
+        res = requests.get(url, timeout=5)
+        if res.status_code == 200:
+            data = res.json()
+            sections = data.get("Record", {}).get("Section", [])
+            
+            for sec in sections:
+                # Cari Bagian Sifat Kimia & Fisika (Chemical and Physical Properties)
+                if sec.get("TOCHeading") == "Chemical and Physical Properties":
+                    sub_sections = sec.get("Section", [])
+                    for sub in sub_sections:
+                        if sub.get("TOCHeading") == "Experimental Properties":
+                            prop_sections = sub.get("Section", [])
+                            for prop in prop_sections:
+                                # Dapatkan Titik Didih
+                                if prop.get("TOCHeading") == "Boiling Point":
+                                    info_list = prop.get("Information", [])
+                                    if info_list:
+                                        bp_val = info_list[0].get("Value", {}).get("StringWithMarkup", [{}])[0].get("String", bp_val)
+                                        
+                # Cari Bagian Keselamatan & Reaktivitas (Safety and Hazard)
+                if sec.get("TOCHeading") == "Safety and Hazard Properties":
+                    sub_sections = sec.get("Section", [])
+                    for sub in sub_sections:
+                        if sub.get("TOCHeading") == "Hazards Identification":
+                            prop_sections = sub.get("Section", [])
+                            for prop in prop_sections:
+                                if prop.get("TOCHeading") == "GHS Classification":
+                                    info_list = prop.get("Information", [])
+                                    if info_list:
+                                        markup_list = info_list[0].get("Value", {}).get("StringWithMarkup", [{}])
+                                        if markup_list:
+                                            reactivity_val = markup_list[0].get("String", reactivity_val)
+    except Exception:
+        pass
+        
+    return bp_val, reactivity_val
+
+# 6. MENYUSUN NAVIGASI TABS
 tab1, tab2, tab3 = st.tabs(["🔍 Penjelajah 3D", "⚡ Lab Reaksi Organik", "📝 Kuis Tata Nama"])
 
 # ==========================================
@@ -107,10 +163,9 @@ tab1, tab2, tab3 = st.tabs(["🔍 Penjelajah 3D", "⚡ Lab Reaksi Organik", "�
 with tab1:
     if not IMPORTS_SUCCESSFUL:
         st.error(f"❌ Gagal memuat pustaka kimia. Masalah: {IMPORT_ERROR_MSG}")
-        st.info("Tips: Pastikan file 'requirements.txt' sudah terkonfigurasi dengan benar di GitHub Anda.")
     else:
         st.markdown("<h3 style='color: #6c5ce7;'>🔍 Eksplorasi & Visualisasi Senyawa</h3>", unsafe_allow_html=True)
-        nama_senyawa = st.text_input("Ketik Nama Senyawa Kimia (Inggris):", "Caffeine", key="search_input")
+        nama_senyawa = st.text_input("Ketik Nama Senyawa Kimia (Inggris):", "Ethanol", key="search_input")
 
         if st.button("Analisis & Visualisasikan", key="btn_search"):
             with st.spinner("Menghubungkan ke database PubChem..."):
@@ -118,6 +173,10 @@ with tab1:
                     hasil_pencarian = pcp.get_compounds(nama_senyawa, 'name')
                     if hasil_pencarian:
                         senyawa = hasil_pencarian[0]
+                        
+                        # Ambil Titik Didih dan Reaktivitas Riil dari API
+                        titik_didih, bahaya_reaktivitas = get_boiling_point_and_safety(senyawa.cid)
+                        
                         kol1, kol2 = st.columns(2)
                         
                         with kol1:
@@ -129,11 +188,18 @@ with tab1:
                                     <tr style="border-bottom: 1px solid #f1f2f6;"><td style="padding: 8px 0; font-weight: bold;">Nama IUPAC</td><td style="color: #636e72;">{getattr(senyawa, 'iupac_name', 'Tidak tersedia')}</td></tr>
                                     <tr style="border-bottom: 1px solid #f1f2f6;"><td style="padding: 8px 0; font-weight: bold;">Rumus Molekul</td><td style="color: #e84393; font-weight: bold;">{getattr(senyawa, 'molecular_formula', 'Tidak tersedia')}</td></tr>
                                     <tr style="border-bottom: 1px solid #f1f2f6;"><td style="padding: 8px 0; font-weight: bold;">Berat Molekul</td><td style="color: #636e72;">{getattr(senyawa, 'molecular_weight', 'Tidak tersedia')} g/mol</td></tr>
+                                    <tr style="border-bottom: 1px solid #f1f2f6;"><td style="padding: 8px 0; font-weight: bold; color: #ff7675;">🌡️ Titik Didih (Real)</td><td style="color: #ff7675; font-weight: bold;">{titik_didih}</td></tr>
                                 </table>
                             </div>
                             """, unsafe_allow_html=True)
+                            
                             st.write("")
-                            st.info("💡 **Titik Didih & Reaktivitas:** Data eksperimental ini memerlukan pemrosesan dokumen literatur (document parsing) lebih mendalam langsung dari REST API PubChem sehingga belum ditampilkan pada rilis versi dasar ini.")
+                            st.markdown(f"""
+                            <div style="background-color: #fff2f2; padding: 20px; border-radius: 12px; border-left: 5px solid #ff7675;">
+                                <h5 style="color: #d63031; margin-top:0;">⚠️ Klasifikasi Bahaya & Reaktivitas:</h5>
+                                <p style="font-size: 13px; color: #2d3436; margin: 0;">{bahaya_reaktivitas}</p>
+                            </div>
+                            """, unsafe_allow_html=True)
                         
                         with kol2:
                             st.markdown("""
@@ -160,14 +226,11 @@ with tab1:
                     st.error(f"Error: {e}")
 
 # ==========================================
-# TAB 2: LAB REAKSI ORGANIK (DIPERLUAS & DISYARATKAN)
+# TAB 2: LAB REAKSI ORGANIK
 # ==========================================
 with tab2:
     st.markdown("<h3 style='color: #e17055;'>⚡ Laboratorium Mekanisme Reaksi Organik</h3>", unsafe_allow_html=True)
     
-    # ----------------------------------------------------
-    # FITUR BARU: REAKTOR INTERAKTIF MANDIRI (USER INPUT)
-    # ----------------------------------------------------
     st.markdown("""
     <div style="background-color: #fff9f4; padding: 25px; border-radius: 15px; border-left: 5px solid #ff7675; box-shadow: 0 4px 15px rgba(0,0,0,0.02); margin-bottom: 25px;">
         <h4 style="color: #d63031; margin-top:0;">🛠️ Reaktor Kustom Dinamis</h4>
@@ -205,16 +268,14 @@ with tab2:
         )
         
     if st.button("Jalankan Reaksi Kustom 🧪"):
+        st.session_state.reaksi_dijalankan = True
+        
         # Logika Prediksi Reaksi Kimia Organik
-        # Pemetaan Nama Alkil
         nama_induk = rantai_alkil.split(" (")[0]
         formula_induk = rantai_alkil.split("(")[1].replace(")", "")
-        
-        # Pemetaan Pereaksi
         nama_pereaksi = gugus_reagen.split(" (")[0]
         formula_pereaksi = gugus_reagen.split("(")[1].replace(")", "")
         
-        # Penentuan Hasil Reaksi & IUPAC
         nama_produk = ""
         rumus_produk = ""
         tipe_reaksi_kustom = ""
@@ -226,15 +287,15 @@ with tab2:
             if "Metil" in nama_induk:
                 nama_produk = "Metanol"
                 rumus_produk = "CH_3OH"
-                penjelasan_kustom = "Metil klorida/bromida diserang oleh nukleofil hidroksida (OH⁻) menghasilkan Metanol."
+                penjelasan_kustom = "Metil halida diserang oleh nukleofil hidroksida (OH⁻) melalui reaksi satu tahap (SN2) menghasilkan Metanol."
             elif "Etil" in nama_induk:
                 nama_produk = "Etanol"
                 rumus_produk = "C_2H_5OH"
-                penjelasan_kustom = "Etil halida bereaksi dengan basa kuat encer menghasilkan Etanol melalui mekanisme SN2."
+                penjelasan_kustom = "Etil halida bereaksi dengan basa kuat encer (seperti NaOH encer) menghasilkan Etanol."
             elif "Propil" in nama_induk:
                 nama_produk = "1-Propanol"
                 rumus_produk = "C_3H_7OH"
-                penjelasan_kustom = "Substitusi langsung menghasilkan propanol primer."
+                penjelasan_kustom = "Substitusi nukleofilik pada karbon primer menghasilkan propanol primer."
             elif "Isopropil" in nama_induk:
                 nama_produk = "2-Propanol (Isopropanol)"
                 rumus_produk = "(CH_3)_2CHOH"
@@ -242,60 +303,60 @@ with tab2:
             elif "Fenil" in nama_induk:
                 nama_produk = "Fenol"
                 rumus_produk = "C_6H_5OH"
-                penjelasan_kustom = "Diperoleh melalui hidrolisis klorobenzena dengan kondisi suhu dan tekanan ekstrim (Proses Dow)."
+                penjelasan_kustom = "Dibuat dari hidrolisis klorobenzena pada kondisi suhu tinggi dan tekanan ekstrim (Proses Dow)."
 
         elif gugus_reagen == "Aldehid (-CHO)":
             tipe_reaksi_kustom = "Oksidasi / Karbonilasi"
             if "Metil" in nama_induk:
                 nama_produk = "Etanal (Asetaldehid)"
                 rumus_produk = "CH_3CHO"
-                penjelasan_kustom = "Penambahan gugus aldehid membentuk rantai karbon beranggotakan dua karbon."
+                penjelasan_kustom = "Penambahan gugus aldehid membentuk rantai aldehid beranggotakan dua atom karbon."
             elif "Etil" in nama_induk:
                 nama_produk = "Propanal"
                 rumus_produk = "C_2H_5CHO"
-                penjelasan_kustom = "Reaksi hidrokFormilasi menghasilkan senyawa aldehid propanal."
+                penjelasan_kustom = "Gugus karbonil berada di ujung rantai dengan panjang tiga atom karbon."
             elif "Propil" in nama_induk:
                 nama_produk = "Butanal"
                 rumus_produk = "C_3H_7CHO"
-                penjelasan_kustom = "Memperpanjang rantai induk propil menjadi butanal."
+                penjelasan_kustom = "Oksidasi butanol primer menggunakan pereaksi selektif menghasilkan Butanal."
             elif "Isopropil" in nama_induk:
                 nama_produk = "2-Metilpropanal"
                 rumus_produk = "(CH_3)_2CHCHO"
-                penjelasan_kustom = "Membentuk aldehid bercabang dengan gugus metil pada karbon nomor 2."
+                penjelasan_kustom = "Membentuk aldehid bercabang dengan rantai induk propanal."
             elif "Fenil" in nama_induk:
                 nama_produk = "Benzaldehid"
                 rumus_produk = "C_6H_5CHO"
-                penjelasan_kustom = "Oksidasi parsial toluena atau klorinasi diikuti hidrolisis menghasilkan benzaldehid."
+                penjelasan_kustom = "Oksidasi parsial Toluena menghasilkan senyawa aromatis beraroma khas amandel."
 
         elif gugus_reagen == "Keton (-CO-CH3)":
             tipe_reaksi_kustom = "Asilasi Friedel-Crafts / Adisi"
             if "Metil" in nama_induk:
                 nama_produk = "Propanon (Aseton)"
                 rumus_produk = "CH_3COCH_3"
-                penjelasan_kustom = "Keton paling sederhana yang terbentuk dari penggabungan metil dengan asil."
+                penjelasan_kustom = "Senyawa keton paling sederhana dan sering digunakan sebagai pelarut universal."
             elif "Etil" in nama_induk:
                 nama_produk = "Butanon"
                 rumus_produk = "C_2H_5COCH_3"
-                penjelasan_kustom = "Keton rantai lurus berkarbon 4."
+                penjelasan_kustom = "Senyawa keton rantai lurus berkarbon empat."
             elif "Propil" in nama_induk:
                 nama_produk = "2-Pentanon"
                 rumus_produk = "C_3H_7COCH_3"
-                penjelasan_kustom = "Terbentuk keton dengan gugus karbonil pada posisi C2."
+                penjelasan_kustom = "Terbentuk senyawa keton asimetris dengan gugus fungsi karbonil di posisi karbon nomor dua."
             elif "Isopropil" in nama_induk:
                 nama_produk = "3-Metil-2-butanon"
                 rumus_produk = "(CH_3)_2CHCOCH_3"
-                penjelasan_kustom = "Keton bercabang yang menonjolkan struktur isopropil asli."
+                penjelasan_kustom = "Keton bercabang yang mempertahankan struktur awal isopropil."
             elif "Fenil" in nama_induk:
                 nama_produk = "Asetofenon"
                 rumus_produk = "C_6H_5COCH_3"
-                penjelasan_kustom = "Hasil asilasi Friedel-Crafts benzena menggunakan asetil klorida dengan bantuan AlCl3."
+                penjelasan_kustom = "Dibuat lewat reaksi asilasi Friedel-Crafts benzena dengan bantuan asam Lewis AlCl3."
 
         elif gugus_reagen == "Asam Karboksilat (-COOH)":
-            tipe_reaksi_kustom = "Karbonilasi / Hidrolisis Nitril"
+            tipe_reaksi_kustom = "Karbonilasi / Hidrolisis"
             if "Metil" in nama_induk:
                 nama_produk = "Asam Etanoat (Asam Asetat)"
                 rumus_produk = "CH_3COOH"
-                penjelasan_kustom = "Karbonilasi metanol menggunakan CO (Proses Monsanto)."
+                penjelasan_kustom = "Oksidasi etanol secara biologis atau kimiawi menghasilkan senyawa cuka makan."
             elif "Etil" in nama_induk:
                 nama_produk = "Asam Propanoat"
                 rumus_produk = "C_2H_5COOH"
@@ -303,78 +364,10 @@ with tab2:
             elif "Propil" in nama_induk:
                 nama_produk = "Asam Butanoat"
                 rumus_produk = "C_3H_7COOH"
-                penjelasan_kustom = "Diperoleh melalui oksidasi butanol primer."
+                penjelasan_kustom = "Asam karboksilat berkarbon empat yang beraroma menyengat mentega tengik."
             elif "Isopropil" in nama_induk:
-                nama_produk = "Asam 2-Metilpropanoat (Asam Isobutirat)"
+                nama_produk = "Asam 2-Metilpropanoat"
                 rumus_produk = "(CH_3)_2CHCOOH"
                 penjelasan_kustom = "Asam karboksilat bercabang."
             elif "Fenil" in nama_induk:
-                nama_produk = "Asam Benzoat"
-                rumus_produk = "C_6H_5COOH"
-                penjelasan_kustom = "Oksidasi asam dari Toluena dengan oksidator kuat seperti KMnO4."
-
-        elif gugus_reagen == "Eter (-O-CH3)":
-            tipe_reaksi_kustom = "Sintesis Eter Williamson"
-            if "Metil" in nama_induk:
-                nama_produk = "Metoksimetana (Dimetil Eter)"
-                rumus_produk = "CH_3OCH_3"
-                penjelasan_kustom = "Metoksida menyerang metil halida menghasilkan eter simetris terkecil."
-            elif "Etil" in nama_induk:
-                nama_produk = "Metoksietana (Etil Metil Eter)"
-                rumus_produk = "C_2H_5OCH_3"
-                penjelasan_kustom = "Reaksi antara natrium metoksida dan etil iodida."
-            elif "Propil" in nama_induk:
-                nama_produk = "1-Metoksipropana"
-                rumus_produk = "C_3H_7OCH_3"
-                penjelasan_kustom = "Sintesis eter asimetris melalui substitusi nukleofilik."
-            elif "Isopropil" in nama_induk:
-                nama_produk = "2-Metoksipropana"
-                rumus_produk = "(CH_3)_2CHOCH_3"
-                penjelasan_kustom = "Substitusi pada gugus alkil sekunder."
-            elif "Fenil" in nama_induk:
-                nama_produk = "Anisol (Metoksibenzena)"
-                rumus_produk = "C_6H_5OCH_3"
-                penjelasan_kustom = "Natrium fenoksida bereaksi dengan metil halida (sintesis eter aromatis)."
-
-        elif gugus_reagen == "Ester (-COOCH3)":
-            tipe_reaksi_kustom = "Esterifikasi / Substitusi Asil"
-            if "Metil" in nama_induk:
-                nama_produk = "Metil Asetat"
-                rumus_produk = "CH_3COOCH_3"
-                penjelasan_kustom = "Esterifikasi asam asetat dengan metanol."
-            elif "Etil" in nama_induk:
-                nama_produk = "Metil Propanoat"
-                rumus_produk = "C_2H_5COOCH_3"
-                penjelasan_kustom = "Ester berbau harum apel."
-            elif "Propil" in nama_induk:
-                nama_produk = "Metil Butanoat"
-                rumus_produk = "C_3H_7COOCH_3"
-                penjelasan_kustom = "Ester beraroma buah nanas."
-            elif "Isopropil" in nama_induk:
-                nama_produk = "Metil Isobutirat"
-                rumus_produk = "(CH_3)_2CHCOOCH_3"
-                penjelasan_kustom = "Ester bercabang dengan aroma manis buah-buahan."
-            elif "Fenil" in nama_induk:
-                nama_produk = "Metil Benzoat"
-                rumus_produk = "C_6H_5COOCH_3"
-                penjelasan_kustom = "Terbentuk melalui reaksi kondensasi asam benzoat dan metanol."
-
-        elif "Halogen" in gugus_reagen:
-            hal_sym = "Cl" if "Klorida" in gugus_reagen else "Br"
-            hal_name = "Klorida" if "Klorida" in gugus_reagen else "Bromida"
-            hal_prefix = "Kloro" if "Klorida" in gugus_reagen else "Bromo"
-            
-            tipe_reaksi_kustom = "Halogenasi Radikal Bebas / Substitusi Elektrofilik"
-            
-            if "Metil" in nama_induk:
-                nama_produk = f"Metil {hal_name}"
-                rumus_produk = f"CH_3{hal_sym}"
-                penjelasan_kustom = "Reaksi substitusi radikal bebas alkana dengan gas halogen di bawah sinar UV."
-            elif "Etil" in nama_induk:
-                nama_produk = f"Etil {hal_name}"
-                rumus_produk = f"C_2H_5{hal_sym}"
-                penjelasan_kustom = "Halogenasi etana dengan kontrol stoikiometri."
-            elif "Propil" in nama_induk:
-                nama_produk = f"1-{hal_prefix}propana"
-                rumus_produk = f"C_3H_7{hal_sym}"
-                penjelasan_kusto
+                nam
