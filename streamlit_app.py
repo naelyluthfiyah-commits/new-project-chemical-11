@@ -33,7 +33,7 @@ if "kuis_selesai" not in st.session_state:
 
 # Konfigurasi Halaman Utama
 st.set_page_config(
-    page_title="ChemExplorer Pro - Kelompok Kimia", 
+    page_title="Organic Chemistry - Kelompok Kimia", 
     layout="wide",
     page_icon="🧪"
 )
@@ -223,18 +223,18 @@ if not st.session_state.halaman_masuk:
     <div style="background: linear-gradient(135deg, #6c5ce7, #a29bfe, #fd79a8, #ffeaa7); padding: 60px 40px; border-radius: 30px; color: white; text-align: center; box-shadow: 0 15px 35px rgba(0,0,0,0.15); margin-top: 50px; margin-bottom: 30px;">
         <span style="font-size: 80px;">🧪</span>
         <h1 style="color: white; font-size: 50px; font-weight: 900; font-family: 'Segoe UI', Arial, sans-serif; text-shadow: 2px 2px 8px rgba(0,0,0,0.2); margin-top: 10px;">
-            Selamat Datang di ChemExplorer Pro!
+            Selamat Datang di Organic Chemistry!
         </h1>
         <p style="font-size: 22px; max-width: 800px; margin: 20px auto; opacity: 0.95; line-height: 1.6; font-weight: 500;">
             Masuki dunia seru eksplorasi struktur kimia organik secara 3D! Anda dapat merancang molekul impian, mensimulasikan berbagai reaksi kimia yang menakjubkan, serta menguji pengetahuan tata nama senyawa Anda dengan cara menyenangkan.
         </p>
         <p style="font-size: 16px; font-style: italic; opacity: 0.8; margin-bottom: 30px;">
-            Dibuat dengan cinta untuk memenuhi tugas proyek kelompok mata kuliah kimia.
+            Dibuat untuk memenuhi tugas project Praktik Logika Pemrograman Komputer.
         </p>
     </div>
     """, unsafe_allow_html=True)
     
-    st.markdown("<h3 style='text-align: center; color: #2d3436; margin-bottom: 15px;'>👥 Dipersembahkan oleh:</h3>", unsafe_allow_html=True)
+    st.markdown("<h3 style='text-align: center; color: #2d3436; margin-bottom: 15px;'>👥 Dipersembahkan oleh Kelompok 11:</h3>", unsafe_allow_html=True)
     
     member_cols = st.columns(4)
     colors = [
@@ -417,6 +417,7 @@ else:
                     nama_produk = "Metanol"
                     rumus_produk = "CH_3OH"
                     penjelasan_kustom = "Metil halida diserang oleh nukleofil hidroksida (OH⁻) melalui reaksi satu tahap (SN2) menghasilkan Metanol."
+                    rumus_latex = r"\text{CH3-} + \text{OH-} \longrightarrow \text{CH_30H}"
                 elif "Etil" in nama_induk:
                     nama_produk = "Etanol"
                     rumus_produk = "C_2H_5OH"
