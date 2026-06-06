@@ -383,7 +383,7 @@ else:
                 ["Alkohol (-OH)", "Aldehid (-CHO)", "Keton (-CO-CH3)", "Asam Karboksilat (-COOH)", "Eter (-O-CH3)"]
             )
 
-          if st.button("Jalankan Reaksi Kustom 🧪"):
+if st.button("Jalankan Reaksi Kustom 🧪"):
     # ==================== KELOMPOK METIL ====================
     if "Metil" in rantai_alkil and "Alkohol" in gugus_reagen:
         tipe_rx = "Substitusi Nukleofilik (SN2)"
