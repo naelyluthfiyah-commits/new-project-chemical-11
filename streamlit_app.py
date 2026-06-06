@@ -578,7 +578,7 @@ else:
                     nama_produk = f"{hal_prefix}benzena"
                     rumus_produk = f"C_6H_5{hal_sym}"
                     penjelasan_kustom = "Substitusi Elektrofilik Aromatik menggunakan katalis asam Lewis (FeCl3 atau FeBr3)."
-                else:
+        else:
         tipe_rx = "Reaksi Organik Umum"
         nama_p = "Produk Hasil Reaksi"
         penjelasan = f"Reaksi antara {rantai_alkil} dan {gugus_reagen} berhasil disimulasikan ke dalam sistem."
