@@ -410,6 +410,7 @@ else:
             rumus_produk = ""
             tipe_reaksi_kustom = ""
             penjelasan_kustom = ""
+            rumus_latex = ""
             
             if gugus_reagen == "Alkohol (-OH)":
                 tipe_reaksi_kustom = "Substitusi Nukleofilik (Pembentukan Alkohol)"
@@ -422,6 +423,7 @@ else:
                     nama_produk = "Etanol"
                     rumus_produk = "C_2H_5OH"
                     penjelasan_kustom = "Etil halida bereaksi dengan basa kuat encer (seperti NaOH encer) menghasilkan Etanol."
+                    
                 elif "Propil" in nama_induk:
                     nama_produk = "1-Propanol"
                     rumus_produk = "C_3H_7OH"
