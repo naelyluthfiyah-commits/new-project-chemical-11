@@ -240,8 +240,8 @@ if not st.session_state.halaman_masuk:
     colors = [
         {"bg": "#ffeaa7", "border": "#fdcb6e", "text": "#d35400", "emoji": "🧑‍💻"},
         {"bg": "#dff9fb", "border": "#c7ecee", "text": "#0984e3", "emoji": "👩‍🔬"},
-        {"bg": "#ffdfdf", "border": "#ff7675", "text": "#c0392b", "emoji": "👨‍🎨"},
-        {"bg": "#ebfffa", "border": "#55efc4", "text": "#00b894", "emoji": "👩‍💻"}
+        {"bg": "#ffdfdf", "border": "#ff7675", "text": "#c0392b", "emoji": "👩‍💻"},
+        {"bg": "#ebfffa", "border": "#55efc4", "text": "#00b894", "emoji": "👩‍🔬"}
     ]
     members_data = [
         {"nama": "Andika Dwi Prashojo", "nim": "NIM. 2560571", "color": colors[0]},
