@@ -138,14 +138,11 @@ KAMUS_KIMIA = {
 }
 
 def terjemahkan_ke_inggris(nama_input):
-    # Bersihkan input, ubah menjadi huruf kecil semua dan hapus spasi berlebih
     nama_bersih = nama_input.strip().lower()
     
-    # Cek kecocokan langsung di kamus
     if nama_bersih in KAMUS_KIMIA:
         return KAMUS_KIMIA[nama_bersih]
     
-    # Cek pola akhiran akhiran umum bahasa indonesia ke bahasa inggris
     translated = nama_bersih
     if translated.endswith("ol"):
         pass 
@@ -162,7 +159,6 @@ def terjemahkan_ke_inggris(nama_input):
         else:
             translated = bagian + " acid"
             
-    # Mengganti huruf-huruf spesifik kimia
     translated = translated.replace("fena", "phena")
     translated = translated.replace("benz", "benz")
     translated = translated.replace("metil", "methyl")
@@ -223,7 +219,6 @@ def get_boiling_point_and_safety(cid):
 # SCREEN DEPAN / LANDING WELCOME PAGE
 # ==========================================
 if not st.session_state.halaman_masuk:
-    # Desain Splash Screen Selamat Datang yang Menarik & Interaktif
     st.markdown("""
     <div style="background: linear-gradient(135deg, #6c5ce7, #a29bfe, #fd79a8, #ffeaa7); padding: 60px 40px; border-radius: 30px; color: white; text-align: center; box-shadow: 0 15px 35px rgba(0,0,0,0.15); margin-top: 50px; margin-bottom: 30px;">
         <span style="font-size: 80px;">🧪</span>
@@ -278,7 +273,6 @@ if not st.session_state.halaman_masuk:
 # HALAMAN UTAMA APLIKASI (Setelah Tombol "Masuk" Diklik)
 # ==========================================
 else:
-    # Tombol untuk Kembali ke Beranda / Welcome Screen
     if st.sidebar.button("⬅ Kembali ke Halaman Selamat Datang"):
         st.session_state.halaman_masuk = False
         st.rerun()
@@ -291,7 +285,6 @@ else:
     * **📝 Kuis Tata Nama:** Evaluasi interaktif satu per satu soal.
     """)
 
-    # 5. MENYUSUN NAVIGASI TABS UTAMA
     tab1, tab2, tab3 = st.tabs(["🔍 Penjelajah 3D", "⚡ Lab Reaksi Organik", "📝 Kuis Tata Nama"])
 
     # ==========================================
@@ -304,11 +297,9 @@ else:
             st.markdown("<h3 style='color: #6c5ce7;'>🔍 Eksplorasi & Visualisasi Senyawa</h3>", unsafe_allow_html=True)
             st.write("Ketik nama senyawa organik secara **IUPAC** atau **Trivial** menggunakan **Bahasa Indonesia** atau **Bahasa Inggris** (Contoh: *etanol*, *asam asetat*, *aspirin*, *benzena*).")
             
-            # Input dari user
             nama_senyawa_input = st.text_input("Ketik Nama Senyawa Kimia:", "etanol", key="search_input")
 
             if st.button("Analisis & Visualisasikan", key="btn_search"):
-                # Terjemahkan ke Bahasa Inggris sebelum memanggil PubChem API
                 nama_senyawa_en = terjemahkan_ke_inggris(nama_senyawa_input)
                 
                 with st.spinner(f"Menerjemahkan '{nama_senyawa_input}' ⮕ '{nama_senyawa_en}' dan menyinkronkan dengan PubChem..."):
@@ -316,10 +307,7 @@ else:
                         hasil_pencarian = pcp.get_compounds(nama_senyawa_en, 'name')
                         if hasil_pencarian:
                             senyawa = hasil_pencarian[0]
-                            
-                            # Ambil Titik Didih dan Reaktivitas Riil dari API
                             titik_didih, bahaya_reaktivitas = get_boiling_point_and_safety(senyawa.cid)
-                            
                             kol1, kol2 = st.columns(2)
                             
                             with kol1:
@@ -413,7 +401,6 @@ else:
         if st.button("Jalankan Reaksi Kustom 🧪"):
             st.session_state.reaksi_dijalankan = True
             
-            # Logika Prediksi Reaksi Kimia Organik
             nama_induk = rantai_alkil.split(" (")[0]
             formula_induk = rantai_alkil.split("(")[1].replace(")", "")
             nama_pereaksi = gugus_reagen.split(" (")[0]
@@ -424,7 +411,6 @@ else:
             tipe_reaksi_kustom = ""
             penjelasan_kustom = ""
             
-            # Logika Kombinasi Produk
             if gugus_reagen == "Alkohol (-OH)":
                 tipe_reaksi_kustom = "Substitusi Nukleofilik (Pembentukan Alkohol)"
                 if "Metil" in nama_induk:
@@ -590,7 +576,6 @@ else:
                     rumus_produk = f"C_6H_5{hal_sym}"
                     penjelasan_kustom = "Substitusi Elektrofilik Aromatik menggunakan katalis asam Lewis (FeCl3 atau FeBr3)."
 
-            # Simpan hasil ke dalam session state agar tidak hilang saat di-render
             st.session_state.reaksi_hasil = {
                 "induk": formula_induk,
                 "reagen": formula_pereaksi,
@@ -601,6 +586,7 @@ else:
             }
 
         # Merender Hasil Reaksi secara persist (tetap ada di layar)
+        # --- PERBAIKAN: Format penulisan kode latex agar terender rapi ---
         if st.session_state.reaksi_dijalankan:
             res = st.session_state.reaksi_hasil
             st.markdown(f"""
@@ -613,7 +599,9 @@ else:
                 <p><b>Mekanisme Reaksi:</b> {res['penjelasan']}</p>
             </div>
             """, unsafe_allow_html=True)
-            st.latex(f"\\text{{{res['induk']}}} + \\text{{{res['reagen']}}} \\longrightarrow \\text{{{res['rumus']}}}")
+            
+            # Merender persamaan kimia LaTeX dengan format matematis murni
+            st.latex(rf"\text{{{res['induk']}}} + \text{{{res['reagen']}}} \longrightarrow \text{{{res['rumus']}}}")
 
         st.markdown("<hr style='border: 0.5px dashed #ccc;'>", unsafe_allow_html=True)
 
@@ -710,13 +698,12 @@ else:
             st.latex(r"\text{CH}_3\text{CONH}_2 + \text{H}_2\text{O} + \text{HCl} \longrightarrow \text{CH}_3\text{COOH} + \text{NH}_4\text{Cl}")
 
     # ==========================================
-    # TAB 3: GAME KUIS TATA NAMA (MENYENANGKAN & COLORFUL)
+    # TAB 3: GAME KUIS TATA NAMA
     # ==========================================
     with tab3:
         st.markdown("<h3 style='color: #00b894;'>🏆 Tantangan Cerdas: Kuis Tata Nama IUPAC</h3>", unsafe_allow_html=True)
         st.write("Uji pemahaman Anda! Jawab soal satu per satu, dapatkan skor langsung, serta ulasan pembahasan mendalam.")
 
-        # Data Database 10 Soal Kuis
         DATABASE_SOAL = [
             {
                 "pertanyaan": "Apa nama IUPAC alkana rantai lurus dengan struktur CH3-CH2-CH2-CH3?",
@@ -790,16 +777,12 @@ else:
             }
         ]
 
-        # Logika Alur Kuis Bertahap (Step-by-Step)
-        # --- PERBAIKAN: Menggunakan st.session_state.kuis_selesai tanpa salah eja ---
         if not st.session_state.kuis_selesai:
             idx = st.session_state.kuis_current_idx
             soal_aktif = DATABASE_SOAL[idx]
             
-            # Tampilkan progress bar
             st.progress((idx) / len(DATABASE_SOAL))
             
-            # Kartu Soal Berwarna-Warni sesuai soal aktif
             st.markdown(f"""
             <div style="background-color: {soal_aktif['warna_kartu']}; padding: 22px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
                 <span style="font-size: 14px; font-weight: bold; color: #636e72;">PERTANYAAN {idx + 1} DARI {len(DATABASE_SOAL)}</span>
@@ -807,18 +790,16 @@ else:
             </div>
             """, unsafe_allow_html=True)
             
-            # Opsi jawaban radio button
             pilihan_user = st.radio(
                 "Pilih Jawaban Anda:",
                 soal_aktif['opsi'],
                 key=f"kuis_radio_{idx}",
-                disabled=st.session_state.kuis_terjawab # kunci input jika sudah klik submit
+                disabled=st.session_state.kuis_terjawab
             )
             
             col_k_1, col_k_2 = st.columns([1, 4])
             
             with col_k_1:
-                # Tombol Submit Jawaban Soal Aktif
                 if st.button("Konfirmasi Jawaban ✔", disabled=st.session_state.kuis_terjawab, use_container_width=True):
                     st.session_state.kuis_terjawab = True
                     if pilihan_user == soal_aktif['jawaban']:
@@ -828,14 +809,12 @@ else:
                         st.session_state.kuis_jawab_status = "Salah"
                     st.rerun()
             
-            # Tampilkan Pembahasan Instan di bawah Soal setelah tombol diklik
             if st.session_state.kuis_terjawab:
                 if st.session_state.kuis_jawab_status == "Benar":
                     st.success("✨ **Jawaban Anda Benar! (+10 Poin)**")
                 else:
                     st.error(f"❌ **Jawaban Kurang Tepat.** Jawaban benar: *{soal_aktif['jawaban']}*")
                 
-                # Tampilkan teks penjelasan ilmiah di dalam kartu estetik
                 st.markdown(f"""
                 <div style="background-color: #f1f2f6; padding: 20px; border-radius: 10px; border-left: 5px solid #6c5ce7; margin: 15px 0;">
                     <h5 style="color: #6c5ce7; margin-top: 0; font-weight:bold;">🔍 Pembahasan Jawaban:</h5>
@@ -843,22 +822,18 @@ else:
                 </div>
                 """, unsafe_allow_html=True)
                 
-                # Tombol untuk beralih ke Pertanyaan selanjutnya
                 if idx < len(DATABASE_SOAL) - 1:
                     if st.button("Lanjut ke Soal Berikutnya ⮕"):
-                        # Reset status untuk soal baru
                         st.session_state.kuis_current_idx += 1
                         st.session_state.kuis_terjawab = False
                         st.session_state.kuis_jawab_status = None
                         st.rerun()
                 else:
-                    # --- PERBAIKAN: Menggunakan st.session_state.kuis_selesai tanpa salah eja ---
                     if st.button("Lihat Hasil Skor Akhir Kuis 🏁"):
                         st.session_state.kuis_selesai = True
                         st.rerun()
                         
         else:
-            # Tampilan Halaman Skor Akhir Kuis yang Semarak
             st.balloons()
             st.markdown(f"""
             <div style="background: white; padding: 40px; border-radius: 20px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.08); max-width: 600px; margin: 30px auto;">
@@ -871,7 +846,6 @@ else:
             </div>
             """, unsafe_allow_html=True)
             
-            # Tombol untuk Mengulangi Kuis dari awal
             if st.button("Ulangi Kuis dari Awal 🔄"):
                 st.session_state.kuis_current_idx = 0
                 st.session_state.kuis_score = 0
