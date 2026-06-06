@@ -359,7 +359,7 @@ else:
     # ==========================================
     # TAB 2: LAB REAKSI ORGANIK
     # ==========================================
-        with tab2:
+    with tab2:
         st.markdown("## ⚡ Laboratorium Mekanisme Reaksi Organik")
         
         # --- BAGIAN 1: REAKTOR KUSTOM DINAMIS ---
