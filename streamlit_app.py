@@ -438,26 +438,22 @@ else:
 
             elif gugus_reagen == "Aldehid (-CHO)":
                 tipe_reaksi_kustom = "Oksidasi / Karbonilasi"
-                if "Metil" in nama_induk:
-                    nama_produk = "Etanal (Asetaldehid)"
-                    rumus_produk = "CH_3CHO"
-                    penjelasan_kustom = "Penambahan gugus aldehid membentuk rantai aldehid beranggotakan dua atom karbon."
-                elif "Etil" in nama_induk:
-                    nama_produk = "Propanal"
-                    rumus_produk = "C_2H_5CHO"
-                    penjelasan_kustom = "Gugus karbonil berada di ujung rantai dengan panjang tiga atom karbon."
-                elif "Propil" in nama_induk:
-                    nama_produk = "Butanal"
-                    rumus_produk = "C_3H_7CHO"
-                    penjelasan_kustom = "Oksidasi butanol primer menggunakan pereaksi selektif menghasilkan Butanal."
-                elif "Isopropil" in nama_induk:
-                    nama_produk = "2-Metilpropanal"
-                    rumus_produk = "(CH_3)_2CHCHO"
-                    penjelasan_kustom = "Membentuk aldehid bercabang dengan rantai induk propanal."
-                elif "Fenil" in nama_induk:
-                    nama_produk = "Benzaldehid"
-                    rumus_produk = "C_6H_5CHO"
-                    penjelasan_kustom = "Oksidasi parsial Toluena menghasilkan senyawa aromatis beraroma khas amandel."
+               if "Metil" in rantai_alkil and "Alkohol" in gugus_reagen:
+                tipe_rx = "Substitusi Nukleofilik (Pembentukan Alkohol)"
+                nama_p = "Metanol"
+                penjelasan = "Metil halida diserang oleh nukleofil hidroksida (OH⁻) melalui reaksi satu tahap (SN2) menghasilkan Metanol."
+                # REAKSI DIPERBAIKI: Subskrip (_) dipindah ke luar \text agar menjadi rumus kimia asli yang rapi
+                rumus_latex = r"\text{CH}_3\text{-} + \text{-OH} \longrightarrow \text{CH}_3\text{OH}"
+            elif "Etil" in rantai_alkil and "Alkohol" in gugus_reagen:
+                tipe_rx = "Substitusi Nukleofilik (Pembentukan Alkohol)"
+                nama_p = "Etanol"
+                penjelasan = "Etil halida diserang oleh nukleofil hidroksida (OH⁻) melalui reaksi satu tahap (SN2) menghasilkan Etanol."
+                rumus_latex = r"\text{C}_2\text{H}_5\text{-} + \text{-OH} \longrightarrow \text{C}_2\text{H}_5\text{OH}"
+            else:
+                tipe_rx = "Reaksi Organik"
+                nama_p = "Produk Hasil Reaksi"
+                penjelasan = f"Reaksi antara {rantai_alkil} dan {gugus_reagen} berhasil disimulasikan."
+                rumus_latex = r"\text{R-} + \text{X} \longrightarrow \text{R-X}"
 
             elif gugus_reagen == "Keton (-CO-CH3)":
                 tipe_reaksi_kustom = "Asilasi Friedel-Crafts / Adisi"
