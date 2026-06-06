@@ -564,7 +564,7 @@ if st.button("Jalankan Reaksi Kustom 🧪"):
         # DATABASE REAKSI STATIS
         # ----------------------------------------------------
     st.markdown("#### 📚 Pustaka Reaksi Kimia Organik Lengkap")
-        st.write("Gunakan pilihan menu di bawah untuk mempelajari berbagai jenis reaksi organik esensial:")
+    st.write("Gunakan pilihan menu di bawah untuk mempelajari berbagai jenis reaksi organik esensial:")
 
         opsi_reaksi = st.selectbox(
             "Pilih Contoh Reaksi Kimia dari Database:",
