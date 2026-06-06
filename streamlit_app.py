@@ -730,4 +730,150 @@ else:
                 "opsi": ["-OH", "-CO-", "-CHO", "-COOH"],
                 "jawaban": "-CHO",
                 "warna_kartu": "#dff9fb",
-                "pembahasan": "Gugus fungsi senyawa aldehid (alkanal) dituliskan secara sistematis sebagai **-CHO** (karbonil di ujung rantai). Sebagai tambahan: -OH adal
+                "pembahasan": "Gugus fungsi senyawa aldehid (alkanal) dituliskan secara sistematis sebagai **-CHO** (karbonil di ujung rantai). Sebagai tambahan: -OH adalah alkohol, -CO- adalah keton, dan -COOH adalah asam karboksilat."
+            },
+            {
+                "pertanyaan": "Senyawa hidrokarbon tidak jenuh CH3-CH=CH-CH3 diberi nama...",
+                "opsi": ["1-Butena", "2-Butena", "Butuna", "Metilpropena"],
+                "jawaban": "2-Butena",
+                "warna_kartu": "#ffdfdf",
+                "pembahasan": "Senyawa CH3-CH=CH-CH3 memiliki ikatan rangkap dua (alkene) yang terletak di antara atom karbon nomor 2 dan 3. Dengan panjang rantai utama 4 karbon, penamaan yang tepat adalah **2-Butena**."
+            },
+            {
+                "pertanyaan": "Nama IUPAC dari senyawa alkohol CH3-CH2-OH adalah...",
+                "opsi": ["Metanol", "Etanol", "Propanol", "Gliserol"],
+                "jawaban": "Etanol",
+                "warna_kartu": "#ebfffa",
+                "pembahasan": "Gugus fungsi alkohol (-OH) melekat pada rantai induk dengan 2 atom karbon (Et-). Berdasarkan aturan tata nama IUPAC, senyawa alkohol ini diberi nama resmi **Etanol**."
+            },
+            {
+                "pertanyaan": "Asam cuka (CH3-COOH) memiliki nama IUPAC sistematis berupa...",
+                "opsi": ["Asam Metanoat", "Asam Etanoat", "Asam Propanoat", "Asam Asetat"],
+                "jawaban": "Asam Etanoat",
+                "warna_kartu": "#ffeaa7",
+                "pembahasan": "CH3-COOH merupakan asam karboksilat dengan 2 atom karbon. Oleh karena itu, nama IUPAC sistematisnya adalah **Asam Etanoat** (sedangkan Asam Asetat adalah nama trivial/umumnya)."
+            },
+            {
+                "pertanyaan": "Cincin Benzena yang berikatan langsung dengan gugus hidroksil (-OH) disebut...",
+                "opsi": ["Toluena", "Anilin", "Fenol", "Asam Benzoat"],
+                "jawaban": "Fenol",
+                "warna_kartu": "#dff9fb",
+                "pembahasan": "Senyawa turunan benzena yang memiliki substituen gugus fungsi alkohol (-OH) pada cincinnya dikenal secara IUPAC dengan nama khusus **Fenol**."
+            },
+            {
+                "pertanyaan": "Jika gugus metil (-CH3) melekat pada cincin benzena, nama senyawa tersebut adalah...",
+                "opsi": ["Toluena", "Klorobenzena", "Stirena", "Nitrobenzena"],
+                "jawaban": "Toluena",
+                "warna_kartu": "#ffdfdf",
+                "pembahasan": "Senyawa metilbenzena memiliki nama trivial yang telah diakui dan disahkan oleh IUPAC sebagai nama sistematis resmi, yaitu **Toluena**."
+            },
+            {
+                "pertanyaan": "Apa nama IUPAC untuk struktur eter simetris CH3-O-CH3?",
+                "opsi": ["Dimetil Eter", "Metoksimetana", "Etoksimetana", "Metoksietana"],
+                "jawaban": "Metoksimetana",
+                "warna_kartu": "#ebfffa",
+                "pembahasan": "Senyawa eter (alkoksialkana) dengan struktur CH3-O-CH3 terdiri dari gugus alkoksi terkecil (metoksi, CH3-O-) yang terikat pada rantai alkana utama (metana, -CH3). Sehingga nama resminya adalah **Metoksimetana**."
+            },
+            {
+                "pertanyaan": "Senyawa keton terkecil CH3-CO-CH3 (aseton) memiliki nama resmi IUPAC...",
+                "opsi": ["Propanal", "Propanon", "Butanon", "Etanon"],
+                "jawaban": "Propanon",
+                "warna_kartu": "#ffeaa7",
+                "pembahasan": "Senyawa keton (alkanon) CH3-CO-CH3 memiliki total 3 atom karbon dengan gugus karbonil di tengah. Sesuai aturan akhiran homolog '-on', nama IUPAC senyawa ini adalah **Propanon**."
+            },
+            {
+                "pertanyaan": "Senyawa ester CH3-COO-CH3 tersusun atas metanol dan asam asetat. Apa nama IUPAC ester tersebut?",
+                "opsi": ["Metil Metanoat", "Metil Etanoat", "Etil Metanoat", "Asetil Metilat"],
+                "jawaban": "Metil Etanoat",
+                "warna_kartu": "#dff9fb",
+                "pembahasan": "Senyawa ester (alkil alkanoat) CH3-COO-CH3 memiliki rantai alkil ester berupa metil (-CH3) dan rantai asam alkanoat berupa etanoat (CH3-COO-). Kombinasinya menghasilkan nama IUPAC **Metil Etanoat**."
+            }
+        ]
+
+        # Logika Alur Kuis Bertahap (Step-by-Step)
+        if not st.session_state.kuis_selesasi:
+            idx = st.session_state.kuis_current_idx
+            soal_aktif = DATABASE_SOAL[idx]
+            
+            # Tampilkan progress bar
+            st.progress((idx) / len(DATABASE_SOAL))
+            
+            # Kartu Soal Berwarna-Warni sesuai soal aktif
+            st.markdown(f"""
+            <div style="background-color: {soal_aktif['warna_kartu']}; padding: 22px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+                <span style="font-size: 14px; font-weight: bold; color: #636e72;">PERTANYAAN {idx + 1} DARI {len(DATABASE_SOAL)}</span>
+                <h4 style="margin: 8px 0 0 0; color: #2d3436; font-size: 18px; font-weight: 700;">{soal_aktif['pertanyaan']}</h4>
+            </div>
+            """, unsafe_allow_html=True)
+            
+            # Opsi jawaban radio button
+            pilihan_user = st.radio(
+                "Pilih Jawaban Anda:",
+                soal_aktif['opsi'],
+                key=f"kuis_radio_{idx}",
+                disabled=st.session_state.kuis_terjawab # kunci input jika sudah klik submit
+            )
+            
+            col_k_1, col_k_2 = st.columns([1, 4])
+            
+            with col_k_1:
+                # Tombol Submit Jawaban Soal Aktif
+                if st.button("Konfirmasi Jawaban ✔", disabled=st.session_state.kuis_terjawab, use_container_width=True):
+                    st.session_state.kuis_terjawab = True
+                    if pilihan_user == soal_aktif['jawaban']:
+                        st.session_state.kuis_score += 10
+                        st.session_state.kuis_jawab_status = "Benar"
+                    else:
+                        st.session_state.kuis_jawab_status = "Salah"
+                    st.rerun()
+            
+            # Tampilkan Pembahasan Instan di bawah Soal setelah tombol diklik
+            if st.session_state.kuis_terjawab:
+                if st.session_state.kuis_jawab_status == "Benar":
+                    st.success("✨ **Jawaban Anda Benar! (+10 Poin)**")
+                else:
+                    st.error(f"❌ **Jawaban Kurang Tepat.** Jawaban benar: *{soal_aktif['jawaban']}*")
+                
+                # Tampilkan teks penjelasan ilmiah di dalam kartu estetik
+                st.markdown(f"""
+                <div style="background-color: #f1f2f6; padding: 20px; border-radius: 10px; border-left: 5px solid #6c5ce7; margin: 15px 0;">
+                    <h5 style="color: #6c5ce7; margin-top: 0; font-weight:bold;">🔍 Pembahasan Jawaban:</h5>
+                    <p style="font-size: 14px; color: #2d3436; margin: 0; line-height:1.5;">{soal_aktif['pembahasan']}</p>
+                </div>
+                """, unsafe_allow_html=True)
+                
+                # Tombol untuk beralih ke Pertanyaan selanjutnya
+                if idx < len(DATABASE_SOAL) - 1:
+                    if st.button("Lanjut ke Soal Berikutnya ⮕"):
+                        # Reset status untuk soal baru
+                        st.session_state.kuis_current_idx += 1
+                        st.session_state.kuis_terjawab = False
+                        st.session_state.kuis_jawab_status = None
+                        st.rerun()
+                else:
+                    if st.button("Lihat Hasil Skor Akhir Kuis 🏁"):
+                        st.session_state.kuis_selesasi = True
+                        st.rerun()
+                        
+        else:
+            # Tampilan Halaman Skor Akhir Kuis yang Semarak
+            st.balloons()
+            st.markdown(f"""
+            <div style="background: white; padding: 40px; border-radius: 20px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.08); max-width: 600px; margin: 30px auto;">
+                <span style="font-size: 60px;">🏆</span>
+                <h2 style="color: #2d3436; font-weight: 800; margin-top:10px;">Tantangan Selesai!</h2>
+                <p style="font-size: 16px; color: #636e72; margin: 5px 0 20px 0;">Berikut adalah perolehan skor akhir kelompok Anda:</p>
+                <div style="background: linear-gradient(135deg, #00b894, #55efc4); padding: 20px; border-radius: 15px; color: white; display: inline-block; margin-bottom: 25px;">
+                    <span style="font-size: 45px; font-weight: 900;">{st.session_state.kuis_score}</span> <span style="font-size: 20px; font-weight:700;">/ 100</span>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+            
+            # Tombol untuk Mengulangi Kuis dari awal
+            if st.button("Ulangi Kuis dari Awal 🔄"):
+                st.session_state.kuis_current_idx = 0
+                st.session_state.kuis_score = 0
+                st.session_state.kuis_terjawab = False
+                st.session_state.kuis_jawab_status = None
+                st.session_state.kuis_selesasi = False
+                st.rerun()
