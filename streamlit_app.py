@@ -223,13 +223,13 @@ if not st.session_state.halaman_masuk:
     <div style="background: linear-gradient(135deg, #6c5ce7, #a29bfe, #fd79a8, #ffeaa7); padding: 60px 40px; border-radius: 30px; color: white; text-align: center; box-shadow: 0 15px 35px rgba(0,0,0,0.15); margin-top: 50px; margin-bottom: 30px;">
         <span style="font-size: 80px;">🧪</span>
         <h1 style="color: white; font-size: 50px; font-weight: 900; font-family: 'Segoe UI', Arial, sans-serif; text-shadow: 2px 2px 8px rgba(0,0,0,0.2); margin-top: 10px;">
-            Selamat Datang di ChemExplorer Pro!
+            Selamat Datang di Name the Molecul!
         </h1>
         <p style="font-size: 22px; max-width: 800px; margin: 20px auto; opacity: 0.95; line-height: 1.6; font-weight: 500;">
             Masuki dunia seru eksplorasi struktur kimia organik secara 3D! Anda dapat merancang molekul impian, mensimulasikan berbagai reaksi kimia yang menakjubkan, serta menguji pengetahuan tata nama senyawa Anda dengan cara menyenangkan.
         </p>
         <p style="font-size: 16px; font-style: italic; opacity: 0.8; margin-bottom: 30px;">
-            Dibuat dengan cinta untuk memenuhi tugas proyek kelompok mata kuliah kimia.
+            Dibuat untuk memenuhi tugas project Praktik Logika Pemrograman Komputer.
         </p>
     </div>
     """, unsafe_allow_html=True)
@@ -240,8 +240,8 @@ if not st.session_state.halaman_masuk:
     colors = [
         {"bg": "#ffeaa7", "border": "#fdcb6e", "text": "#d35400", "emoji": "🧑‍💻"},
         {"bg": "#dff9fb", "border": "#c7ecee", "text": "#0984e3", "emoji": "👩‍🔬"},
-        {"bg": "#ffdfdf", "border": "#ff7675", "text": "#c0392b", "emoji": "👨‍🎨"},
-        {"bg": "#ebfffa", "border": "#55efc4", "text": "#00b894", "emoji": "👩‍💻"}
+        {"bg": "#ffdfdf", "border": "#ff7675", "text": "#c0392b", "emoji": "👩‍💻"},
+        {"bg": "#ebfffa", "border": "#55efc4", "text": "#00b894", "emoji": "👩‍🔬"}
     ]
     members_data = [
         {"nama": "Andika Dwi Prashojo", "nim": "NIM. 2560571", "color": colors[0]},
@@ -280,7 +280,7 @@ else:
     st.sidebar.markdown("""
     ### 🧬 Menu Navigasi
     Gunakan tab menu di sebelah kanan layar untuk beralih fitur:
-    * **🔍 Penjelajah 3D:** Cari senyawa ramah Bahasa Indonesia.
+    * **🔍 Penjelajah Senyawa:** Cari senyawa dalam Bahasa Indonesia.
     * **⚡ Lab Reaksi Organik:** Pilih senyawa dan pereaksinya.
     * **📝 Kuis Tata Nama:** Evaluasi interaktif satu per satu soal.
     """)
