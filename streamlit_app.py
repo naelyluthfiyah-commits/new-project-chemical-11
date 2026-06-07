@@ -33,7 +33,7 @@ if "kuis_selesai" not in st.session_state:
 
 # Konfigurasi Halaman Utama
 st.set_page_config(
-    page_title="Name the Molecul- Kelompok Kimia", 
+    page_title="Name the Molecul - Kelompok 11", 
     layout="wide",
     page_icon="🧪"
 )
