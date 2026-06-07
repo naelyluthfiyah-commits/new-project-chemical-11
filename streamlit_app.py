@@ -33,7 +33,7 @@ if "kuis_selesai" not in st.session_state:
 
 # Konfigurasi Halaman Utama
 st.set_page_config(
-    page_title="ChemExplorer Pro - Kelompok Kimia", 
+    page_title="Name the Molecul- Kelompok Kimia", 
     layout="wide",
     page_icon="🧪"
 )
@@ -234,7 +234,7 @@ if not st.session_state.halaman_masuk:
     </div>
     """, unsafe_allow_html=True)
     
-    st.markdown("<h3 style='text-align: center; color: #2d3436; margin-bottom: 15px;'>👥 Dipersembahkan oleh:</h3>", unsafe_allow_html=True)
+    st.markdown("<h3 style='text-align: center; color: #2d3436; margin-bottom: 15px;'>👥 Dipersembahkan oleh Kelompok 11:</h3>", unsafe_allow_html=True)
     
     member_cols = st.columns(4)
     colors = [
