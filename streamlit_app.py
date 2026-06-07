@@ -285,7 +285,7 @@ else:
     * **📝 Kuis Tata Nama:** Evaluasi interaktif satu per satu soal.
     """)
 
-    tab1, tab2, tab3 = st.tabs(["🔍 Penjelajah 3D", "⚡ Lab Reaksi Organik", "📝 Kuis Tata Nama"])
+    tab1, tab2, tab3 = st.tabs(["🔍 Penjelajah Senyawa", "⚡ Lab Reaksi Organik", "📝 Kuis Tata Nama"])
 
     # ==========================================
     # TAB 1: PENJELAJAH SENYAWA 3D
