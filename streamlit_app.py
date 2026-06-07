@@ -604,6 +604,7 @@ else:
             st.latex(rf"\text{{{res['induk']}}} + \text{{{res['reagen']}}} \longrightarrow \text{{{res['rumus']}}}")
 
         st.markdown("<hr style='border: 0.5px dashed #ccc;'>", unsafe_allow_html=True)
+            
 
         # ----------------------------------------------------
         # DATABASE REAKSI STATIS
