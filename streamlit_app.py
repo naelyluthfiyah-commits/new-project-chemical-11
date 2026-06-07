@@ -854,5 +854,3 @@ else:
                 st.session_state.kuis_selesai = False
                 st.rerun()
 
-```
-
