@@ -277,16 +277,15 @@ else:
         st.session_state.halaman_masuk = False
         st.rerun()
         
-    st.sidebar.markdown("""
-    ### 🧬 Menu Navigasi
-    Gunakan tab menu di sebelah kanan layar untuk beralih fitur:
-    * **🔍 Penjelajah Senyawa:** Cari senyawa dalam Bahasa Indonesia.
-    * **⚡ Lab Reaksi Organik:** Pilih senyawa dan pereaksinya.
-    * **📝 Kuis Tata Nama:** Evaluasi interaktif satu per satu soal.
-    """)
+    st.sidebar.markdown("### 🧬 Menu Navigasi")
+    st,sidebar.write("Silahkan klik menu di bawah ini untuk berpindah halaman:")
 
-    tab1, tab2, tab3 = st.tabs(["🔍 Penjelajah Senyawa", "⚡ Lab Reaksi Organik", "📝 Kuis Tata Nama"])
-
+    # PERBAIKAN 1: Mengubah navigasi agar bisa diklik di sidebar
+    menu_pilihan = st.sidebar.radio(
+        "Pilih Fitur Aplikasi:",
+        ["🔍 Penjelajah Senyawa", "⚡ Lab Reaksi Organik", "📝 Kuis Tata Nama"]
+    )
+    
     # ==========================================
     # TAB 1: PENJELAJAH SENYAWA 3D
     # ==========================================
