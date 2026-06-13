@@ -289,7 +289,7 @@ else:
     # ==========================================
     # TAB 1: PENJELAJAH SENYAWA 3D
     # ==========================================
-   if menu_pilihan == "🔍 Penjelajah Senyawa":
+    if menu_pilihan == "🔍 Penjelajah Senyawa":
         if not IMPORTS_SUCCESSFUL:
             st.error(f"❌ Gagal memuat pustaka kimia. Masalah: {IMPORT_ERROR_MSG}")
         else:
@@ -358,7 +358,7 @@ else:
     # ==========================================
     # TAB 2: LAB REAKSI ORGANIK
     # ==========================================
-   elif menu_pilihan == "⚡ Lab Reaksi Organik":
+    elif menu_pilihan == "⚡ Lab Reaksi Organik":
         st.markdown("<h3 style='color: #e17055;'>⚡ Laboratorium Mekanisme Reaksi Organik</h3>", unsafe_allow_html=True)
         
         st.markdown("""
