@@ -278,7 +278,7 @@ else:
         st.rerun()
         
     st.sidebar.markdown("### 🧬 Menu Navigasi")
-    st,sidebar.write("Silahkan klik menu di bawah ini untuk berpindah halaman:")
+    st.sidebar.write("Silahkan klik menu di bawah ini untuk berpindah halaman:")
 
     # PERBAIKAN 1: Mengubah navigasi agar bisa diklik di sidebar
     menu_pilihan = st.sidebar.radio(
