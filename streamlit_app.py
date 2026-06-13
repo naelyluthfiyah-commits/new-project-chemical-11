@@ -800,7 +800,7 @@ else:
             col_k_1, col_k_2 = st.columns([1, 4])
             
             with col_k_1:
-                if st.button("Konfirmasi Jawaban ✔", disabled=st.session_state.kuis_terjawab, use_container_width=True):
+                if st.button("Analisis ✔", disabled=st.session_state.kuis_terjawab):
                     st.session_state.kuis_terjawab = True
                     if pilihan_user == soal_aktif['jawaban']:
                         st.session_state.kuis_score += 10
