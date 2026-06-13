@@ -700,7 +700,7 @@ else:
     # ==========================================
     # TAB 3: GAME KUIS TATA NAMA
     # ==========================================
-   elif manu_pilihan == "📝 Kuis Tata Nama":
+    elif manu_pilihan == "📝 Kuis Tata Nama":
         st.markdown("<h3 style='color: #00b894;'>🏆 Tantangan Cerdas: Kuis Tata Nama IUPAC</h3>", unsafe_allow_html=True)
         st.write("Uji pemahaman Anda! Jawab soal satu per satu, dapatkan skor langsung, serta ulasan pembahasan mendalam.")
 
