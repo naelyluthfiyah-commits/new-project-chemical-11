@@ -289,7 +289,6 @@ else:
     # ==========================================
     # TAB 1: PENJELAJAH SENYAWA 3D
     # ==========================================
-    with tab1:
     if menu_pilihan == "🔍 Penjelajah Senyawa":
         if not IMPORTS_SUCCESSFUL:
             st.error(f"❌ Gagal memuat pustaka kimia. Masalah: {IMPORT_ERROR_MSG}")
