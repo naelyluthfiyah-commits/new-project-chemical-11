@@ -361,7 +361,6 @@ else:
                                     # --------------------------------------
                                     
                                     st.caption("👆 Tarik molekul dengan mouse untuk memutar. Scroll untuk memperbesar/memperkecil.")
-                                    st.caption("👆 Tarik molekul dengan mouse untuk memutar. Scroll untuk memperbesar/memperkecil.")
                                 else:
                                     st.warning("⚠️ Struktur 3D tidak tersedia di database.")
                         else:
