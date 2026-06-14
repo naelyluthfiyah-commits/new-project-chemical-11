@@ -339,6 +339,9 @@ else:
                                 """, unsafe_allow_html=True)
                                 url_3d = f"https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/{senyawa.cid}/record/SDF/?record_type=3d"
                                 respon = requests.get(url_3d, timeout=10)
+                                # PERBAIKAN: Gaya Molymod dengan keterangan warna
+                                view.setStyle({'stick': {'radius': 0.2}, 'sphere': {'radius': 0.45, 'colors': {'N': 'blue', 'O': 'red', 'C': 'gray', 'H': 'white'}}})
+                                st.markdown("Legenda: 🔵 N, 🔴 O, 🔘 C, ⚪ H")
                                 
                                 if respon.status_code == 200 and len(respon.text) > 100:
                                     view = py3Dmol.view(width=450, height=350)
