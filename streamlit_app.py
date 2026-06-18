@@ -613,8 +613,8 @@ else:
             """, unsafe_allow_html=True)
             
             # Merender persamaan kimia LaTeX dengan format matematis murni
-            induk_rapi = res['induk'].replace("2", "_2").replace("3", "_3").replace("5", "_5").replace("7", "_7")
-            reagen_rapi = res['induk'].replace("2", "_2").replace("3", "_3")
+            induk_rapi = res['induk'].replace("2", "_2").replace("3", "_3").replace("5", "_5").replace("7", "_7").replace("-","^-")
+            reagen_rapi = res['induk'].replace("2", "_2").replace("3", "_3").replace("-","^-")
             st.latex(rf"\mathrm{{{induk_rapi}}} + \mathrm{{{reagen_rapi}}} \longrightarrow \mathrm{{{res['rumus']}}}")
         st.markdown("<hr style='border: 0.5px dashed #ccc;'>", unsafe_allow_html=True)
             
