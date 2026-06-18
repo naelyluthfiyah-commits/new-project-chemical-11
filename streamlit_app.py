@@ -427,7 +427,7 @@ else:
                 tipe_reaksi_kustom = "Substitusi Nukleofilik (Pembentukan Alkohol)"
                 if "Metil" in nama_induk:
                     nama_produk = "Metanol"
-                    rumus_produk = "CH_3OH"
+                    rumus_produk = r"CH_3OH" #Gunakan raw string
                     penjelasan_kustom = "Metil halida diserang oleh nukleofil hidroksida (OH⁻) melalui reaksi satu tahap (SN2) menghasilkan Metanol."
                 elif "Etil" in nama_induk:
                     nama_produk = "Etanol"
@@ -606,7 +606,7 @@ else:
                 <h4 style="color: #00b894; margin-top: 0;">🎉 JAWABAN REAKSI BERHASIL DIANALISIS!</h4>
                 <table style="width: 100%; border-collapse: collapse; margin-bottom: 15px;">
                     <tr><td style="width:30%; font-weight:bold;">Tipe Reaksi:</td><td>{res['tipe']}</td></tr>
-                    <tr><td style="font-weight:bold;">Nama IUPAC Produk:</td><td style="color:#d63031; font-weight:bold; font-size:16px;">{res['produk']}</td></tr>
+                    <tr><td style="font-weight:bold;">Nama IUPAC Produk:</td><td style="color:#2D3436; font-weight:bold; font-size:16px;">{res['produk']}</td></tr>
                 </table>
                 <p><b>Mekanisme Reaksi:</b> {res['penjelasan']}</p>
             </div>
