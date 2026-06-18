@@ -613,7 +613,7 @@ else:
             """, unsafe_allow_html=True)
             
             # Merender persamaan kimia LaTeX dengan format matematis murni
-            induk_rapi = res['induk'].replace("2"), "_2").replace("3", "_3").replace("5"), "_5").replace("7", "_7")
+            induk_rapi = res['induk'].replace("2", "_2").replace("3", "_3").replace("5", "_5").replace("7", "_7")
             st.latex(rf"\mathrm{{{res['induk']}}}+mathrm{{{res['reagen']}}}longrighttarrow \mathrm{{{res['rumus']}}}")
         st.markdown("<hr style='border: 0.5px dashed #ccc;'>", unsafe_allow_html=True)
             
