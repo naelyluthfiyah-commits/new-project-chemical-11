@@ -606,15 +606,15 @@ else:
                 <h4 style="color: #00b894; margin-top: 0;">🎉 JAWABAN REAKSI BERHASIL DIANALISIS!</h4>
                 <table style="width: 100%; border-collapse: collapse; margin-bottom: 15px;">
                     <tr><td style="width:30%; font-weight:bold;">Tipe Reaksi:</td><td>{res['tipe']}</td></tr>
-                    <tr><td style="font-weight:bold;">Nama IUPAC Produk:</td><td style="color:#2D3436; font-weight:bold; font-size:16px;">{res['produk']}</td></tr>
+                    <tr><td style="font-weight:bold;">Nama IUPAC Produk:</td><td style="color:#0984e3; font-weight:bold; font-size:16px;">{res['produk']}</td></tr>
                 </table>
                 <p><b>Mekanisme Reaksi:</b> {res['penjelasan']}</p>
             </div>
             """, unsafe_allow_html=True)
             
             # Merender persamaan kimia LaTeX dengan format matematis murni
-            induk_rapi = res['induk'].replace("2", "_2").replace("3", "_3").replace("5", "_5").replace("7", "_7").replace("-","^-")
-            reagen_rapi = res['induk'].replace("2", "_2").replace("3", "_3").replace("-","^-")
+            induk_rapi = res['induk'].replace("2", "_2").replace("3", "_3").replace("5", "_5").replace("7", "_7")
+            reagen_rapi = res['induk'].replace("2", "_2").replace("3", "_3")
             st.latex(rf"\mathrm{{{induk_rapi}}} + \mathrm{{{reagen_rapi}}} \longrightarrow \mathrm{{{res['rumus']}}}")
         st.markdown("<hr style='border: 0.5px dashed #ccc;'>", unsafe_allow_html=True)
             
