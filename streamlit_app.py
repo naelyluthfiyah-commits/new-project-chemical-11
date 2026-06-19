@@ -273,7 +273,7 @@ if not st.session_state.halaman_masuk:
 # HALAMAN UTAMA APLIKASI (Setelah Tombol "Masuk" Diklik)
 # ==========================================
 else:
-    if st.sidebar.button("⬅ Kembali ke Halaman Selamat Datang"):
+    if st.sidebar.button("⬅ Kembali ke Menu Utama"):
         st.session_state.halaman_masuk = False
         st.rerun()
         
@@ -715,7 +715,7 @@ else:
     # TAB 3: GAME KUIS TATA NAMA
     # ==========================================
     elif menu_pilihan == "📝 Kuis Tata Nama":
-        st.markdown("<h3 style='color: #00b894;'>🏆 Tantangan Cerdas: Kuis Tata Nama IUPAC</h3>", unsafe_allow_html=True)
+        st.markdown("<h3 style='color: #00b894;'>🏆 Cerdas Cermat: Kuis Tata Nama IUPAC</h3>", unsafe_allow_html=True)
         st.write("Uji pemahaman Anda! Jawab soal satu per satu, dapatkan skor langsung, serta ulasan pembahasan mendalam.")
 
         DATABASE_SOAL = [
